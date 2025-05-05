@@ -7,7 +7,7 @@
 		"start:render": "node dist/apps/backend/src/server.js",
 		"start": "dotenv -e .env -- node dist/apps/backend/src/server.js",
 		"dev": "dotenv -e .env.test -- node dist/apps/backend/src/server.js",
-		"build": "tsc",
+		"build": "npm run generate && tsc",
 		"test:unit": "dotenv -e .env.test -- jest --testPathPattern=features --coverage --collectCoverageFrom='src/features/**/*.ts'",
 		"test:integration": "dotenv -e .env.test -- jest --testPathPattern=tests/integration",
 		"biome": "npx @biomejs/biome check --write ./src",
