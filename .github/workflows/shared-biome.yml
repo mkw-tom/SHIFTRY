@@ -1,0 +1,37 @@
+name: Biome Check - Shared
+
+on:
+  pull_request:
+    paths:
+      - "packages/shared/src/**"
+  push:
+    paths:
+      - "packages/shared/src/**"
+
+permissions:
+  contents: write  # 👈 GitHub Actions に書き込み権限を付与
+
+jobs:
+  biome:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/shared
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}  # GitHub Actions用トークン
+          ref: ${{ github.ref }}  # PR のブランチをチェックアウト
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.17.0
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Biome check
+        run: npm run biome
