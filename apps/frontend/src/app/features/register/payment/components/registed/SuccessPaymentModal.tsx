@@ -5,7 +5,7 @@ const SuccessPaymentModal = () => {
 	const { navigateDashboard } = useNavigation();
 	return (
 		<>
-			<p className="text-center text-xs font-bold py-3">
+			<p className="text-center text-xs font-bold py-3 text-black">
 				プランの購入が完了しました✨
 				<br />
 			</p>

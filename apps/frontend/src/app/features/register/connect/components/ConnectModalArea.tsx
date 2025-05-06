@@ -10,11 +10,11 @@ const ConnectModalArea = () => {
 				<h2 className="text-center font-bold text-sm text-black border-b-1 border-b-gray01 pb-1">
 					LINEグループ連携
 				</h2>
-				<ConnectStepsProvider>
-					<RegisterLoadingUIProvider>
+				<RegisterLoadingUIProvider>
+					<ConnectStepsProvider>
 						<ConnectModalContent />
-					</RegisterLoadingUIProvider>
-				</ConnectStepsProvider>
+					</ConnectStepsProvider>
+				</RegisterLoadingUIProvider>
 			</div>
 		</div>
 	);
