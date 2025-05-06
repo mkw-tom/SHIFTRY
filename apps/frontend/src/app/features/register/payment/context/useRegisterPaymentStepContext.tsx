@@ -9,6 +9,7 @@ import {
 	useState,
 } from "react";
 import { useSelector } from "react-redux";
+import { useRegisterLoadingUI } from "../../common/context/useRegisterLoadingUI";
 import {
 	RegisterPaymentStep,
 	type RegisterPaymentUIContextType,
@@ -39,20 +40,26 @@ export const RegisterPaymentStepsProvider = ({
 	const { userToken, storeToken } = useSelector(
 		(state: RootState) => state.token,
 	);
+	const { setPageLoading } = useRegisterLoadingUI();
 
 	useEffect(() => {
 		const checkExistPaymentData = async () => {
 			if (!userToken || !storeToken) {
-				return setStep(RegisterPaymentStep.Select);
+				setStep(RegisterPaymentStep.Select);
+				setPageLoading(false);
+				return;
 			}
 			const payment = await getPayment(userToken, storeToken);
 			if (payment.ok) {
-				return setStep(RegisterPaymentStep.Registed);
+				setStep(RegisterPaymentStep.Registed);
+				setPageLoading(false);
+				return;
 			}
-			return setStep(RegisterPaymentStep.Select);
+			setStep(RegisterPaymentStep.Select);
+			setPageLoading(false);
 		};
 		checkExistPaymentData();
-	}, [userToken, storeToken]);
+	}, [userToken, storeToken, setPageLoading]);
 
 	function changeRegistStep() {
 		setStep(RegisterPaymentStep.Regist);
