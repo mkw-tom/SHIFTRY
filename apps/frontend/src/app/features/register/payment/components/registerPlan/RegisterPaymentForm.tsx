@@ -27,7 +27,8 @@ const RegisterPaymentForm = () => {
 		paymentMethodId: paymentMethodId as string,
 		email: email,
 	};
-	const disabled = !!emailError || cardInfoError === false;
+
+	const disabled = !!emailError;
 
 	return (
 		<div className="flex flex-col gap-5">

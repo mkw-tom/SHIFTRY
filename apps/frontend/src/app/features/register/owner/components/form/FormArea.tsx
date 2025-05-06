@@ -12,11 +12,11 @@ const FormArea = () => {
 				<h2 className="text-center font-bold text-sm text-black border-b-1 border-b-gray01 pb-1">
 					オーナー登録
 				</h2>
-				<RegisterStepsProvider>
-					<RegisterLoadingUIProvider>
+				<RegisterLoadingUIProvider>
+					<RegisterStepsProvider>
 						<FormContent />
-					</RegisterLoadingUIProvider>
-				</RegisterStepsProvider>
+					</RegisterStepsProvider>
+				</RegisterLoadingUIProvider>
 			</div>
 		</div>
 	);

@@ -8,6 +8,7 @@ import {
 	useState,
 } from "react";
 import { useSelector } from "react-redux";
+import { useRegisterLoadingUI } from "../../common/context/useRegisterLoadingUI";
 
 export enum ConnectStep {
 	NotConnect = 0,
@@ -33,12 +34,16 @@ export const useConnectSteps = () => {
 export const ConnectStepsProvider = ({ children }: { children: ReactNode }) => {
 	const [step, setStep] = useState<ConnectStep>(ConnectStep.NotConnect);
 	const token = useSelector((state: RootState) => state.token);
+	const { setPageLoading } = useRegisterLoadingUI();
 
 	useEffect(() => {
 		if (token.connectedGroup === true) {
 			setStep(ConnectStep.Connected);
+			setPageLoading(false);
+			return;
 		}
-	}, [token.connectedGroup]);
+		setPageLoading(false);
+	}, [token.connectedGroup, setPageLoading]);
 
 	function changeConnectedStep() {
 		setStep(ConnectStep.Connected);
