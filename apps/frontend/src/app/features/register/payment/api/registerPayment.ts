@@ -24,10 +24,10 @@ export const postCreatePayment = async (
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${userToken}`,
 			"x-store-id": storeToken,
-			credentials: "include",
-			body: JSON.stringify(payload),
 		},
+		body: JSON.stringify(payload),
 	});
+	console.log(payload);
 
 	const data = await res.json();
 	return data;

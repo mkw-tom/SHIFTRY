@@ -34,7 +34,6 @@ export const postRegisterOwner = async (
 			"Content-Type": "application/json",
 			"x-line-id": lineToken,
 		},
-		credentials: "include",
 		body: JSON.stringify(payload),
 	});
 
