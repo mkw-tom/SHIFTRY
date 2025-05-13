@@ -5,7 +5,7 @@ import type {
 } from "@shared/common/types/errors";
 import type { GetPaymentResponse } from "@shared/payment/types/get";
 
-export const getPayment = async (
+export const getMyPayment = async (
 	userToken: string | null,
 	storeToken: string | null,
 ): Promise<GetPaymentResponse | ErrorResponse | ValidationErrorResponse> => {
