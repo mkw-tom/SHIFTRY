@@ -1,5 +1,5 @@
 "use client";
-import { getPayment } from "@/app/features/common/api/getPayment";
+import { getMyPayment } from "@/app/features/common/api/get-my-payment/api";
 import type { RootState } from "@/app/redux/store";
 import {
 	type ReactNode,
@@ -49,7 +49,7 @@ export const RegisterPaymentStepsProvider = ({
 				setPageLoading(false);
 				return;
 			}
-			const payment = await getPayment(userToken, storeToken);
+			const payment = await getMyPayment(userToken, storeToken);
 			if (payment.ok) {
 				setStep(RegisterPaymentStep.Registed);
 				setPageLoading(false);
