@@ -25,7 +25,7 @@ export const SessionProvider = ({
 	const [session, setSession] = useState<boolean>(false);
 
 	useEffect(() => {
-		if (userToken) {
+		if (!userToken) {
 			router.replace("/register/staff");
 		} else {
 			setSession(true);

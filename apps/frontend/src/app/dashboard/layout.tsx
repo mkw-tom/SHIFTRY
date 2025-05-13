@@ -1,12 +1,19 @@
-// app/dashboard/layout.tsx
-
 import type { ReactNode } from "react";
-import { SessionProvider } from "../features/dashboard/common/useSessionCheck";
+import Header from "../features/dashboard/common/components/Header";
+import BottomDrawer from "../features/dashboard/common/components/bottomDrawer/BottomDrawer";
+import { BottomDrawerProvider } from "../features/dashboard/common/context/useBottomDrawer";
+import { SessionProvider } from "../features/dashboard/common/hook/useSessionCheck";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
 	return (
 		<>
-			<SessionProvider>{children}</SessionProvider>
+			<BottomDrawerProvider>
+				<SessionProvider>
+					<Header />
+					{children}
+					<BottomDrawer />
+				</SessionProvider>
+			</BottomDrawerProvider>
 		</>
 	);
 }
