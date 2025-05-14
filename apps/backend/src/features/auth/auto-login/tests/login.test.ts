@@ -32,19 +32,19 @@ describe("Login (mocked)", () => {
 		(mockVerifyUser as jest.Mock).mockResolvedValue(user);
 		(getStoreFromUser as jest.Mock).mockResolvedValue([{ store: mockStore }]);
 
-		const result = await login(user.id);
+		const result = await login(user.id, store.id);
 		if (!result.user) {
 			return;
 		}
-		if (!result.stores) {
+		if (!result.store) {
 			return;
 		}
 
 		expect(result.user.id).toEqual(user.id);
 		expect(result.user.name).toEqual(user.name);
 		expect(result.user.role).toEqual(user.role);
-		expect(result.stores[0].id).toEqual(mockStore.id);
-		expect(result.stores[0].storeId).toEqual(store.storeId);
-		expect(result.stores[0].name).toEqual(store.name);
+		expect(result.store.id).toEqual(mockStore.id);
+		expect(result.store.storeId).toEqual(store.storeId);
+		expect(result.store.name).toEqual(store.name);
 	});
 });
