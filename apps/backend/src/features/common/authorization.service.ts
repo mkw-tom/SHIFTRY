@@ -1,3 +1,4 @@
+import type { Store, User, UserStore } from "@shared/common/types/prisma";
 import { getShiftRequestById } from "../../repositories/shiftRequest.repository";
 import { getStoreById } from "../../repositories/store.repository";
 import {
@@ -17,7 +18,7 @@ export const verifyUserStore = async (userId: string, storeId: string) => {
 export const verifyUserStoreForOwner = async (
 	userId: string,
 	storeId: string,
-) => {
+): Promise<UserStore> => {
 	const userStore = await getUserStoreByUserIdAndStoreId(userId, storeId);
 	if (!userStore) {
 		throw new Error("User is not authorized");
@@ -31,7 +32,7 @@ export const verifyUserStoreForOwner = async (
 export const verifyUserStoreForOwnerAndManager = async (
 	userId: string,
 	storeId: string,
-) => {
+): Promise<UserStore> => {
 	const userStore = await getUserStoreByUserIdAndStoreId(userId, storeId);
 	if (!userStore) {
 		throw new Error("User is not authorized ");
@@ -42,19 +43,19 @@ export const verifyUserStoreForOwnerAndManager = async (
 	return userStore;
 };
 
-export const verifyUser = async (userId: string) => {
+export const verifyUser = async (userId: string): Promise<User> => {
 	const user = await getUserById(userId);
 	if (!user) throw new Error("User not found");
 	return user;
 };
 
-export const verifyUserByLineId = async (lineId: string) => {
+export const verifyUserByLineId = async (lineId: string): Promise<User> => {
 	const user = await getUserByLineId(lineId);
 	if (!user) throw new Error("User not found");
 	return user;
 };
 
-export const verifyUserForOwner = async (userId: string) => {
+export const verifyUserForOwner = async (userId: string): Promise<User> => {
 	const user = await getUserById(userId);
 	if (!user) {
 		throw new Error("User is not authorized");
@@ -66,11 +67,14 @@ export const verifyUserForOwner = async (userId: string) => {
 export const verifyStoreIdAndShiftRequestId = async (
 	storeId: string,
 	shiftRequestId: string,
-) => {
+): Promise<Store> => {
 	const store = await getStoreById(storeId);
 	const shiftRequest = await getShiftRequestById(shiftRequestId);
 	if (store?.id !== shiftRequest?.storeId) {
 		throw new Error("these data are unAuthorize ");
+	}
+	if (!store) {
+		throw new Error("store is not found ");
 	}
 
 	return store;

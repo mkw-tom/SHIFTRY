@@ -13,8 +13,9 @@ const DefaultTimePositionsSchema = z.object({
 	Saturday: z.array(TimeSlot),
 	Sunday: z.array(TimeSlot),
 });
-export type DefaultTimePositionsType = z.infer<typeof DefaultTimePositionsSchema>
-
+export type DefaultTimePositionsType = z.infer<
+	typeof DefaultTimePositionsSchema
+>;
 
 const OverrideDatesSchema = z.record(
 	z
@@ -22,7 +23,7 @@ const OverrideDatesSchema = z.record(
 		.regex(/^\d{4}-\d{2}-\d{2}$/), // YYYY-MM-DD形式
 	z.array(TimeSlot),
 );
-export type OverrideDatesType = z.infer<typeof OverrideDatesSchema>
+export type OverrideDatesType = z.infer<typeof OverrideDatesSchema>;
 
 export const ShiftsOfRequestsValidate = z.object({
 	defaultTimePositions: DefaultTimePositionsSchema,

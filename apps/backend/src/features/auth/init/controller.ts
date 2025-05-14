@@ -13,17 +13,18 @@ const InitController = async (
 		const userId = req.userId as string;
 		const { storeId } = storeIdValidate.parse(req.body);
 
-		const { user, store, shiftRequest } = await Init(userId, storeId);
-		const user_token = generateJWT({ userId: user.id });
+		const { store, shiftRequest } = await Init(userId, storeId);
+		// const user_token = generateJWT({ userId: user.id });
 		const store_token = generateJWT({ storeId: store.id });
 		const group_token = generateJWT({ groupId: store.groupId as string });
+		if (!store.groupId) {
+			throw new Error("groupId is missing");
+		}
 
 		res.json({
 			ok: true,
-			user,
 			store,
 			shiftRequest,
-			user_token,
 			store_token,
 			group_token,
 		});
