@@ -5,23 +5,37 @@ import { setRegisterUserInfo } from "@/app/redux/slices/user";
 import type { AppDispatch } from "@/app/redux/store";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useDetectUserRole } from "./useDetectUserRole";
-import { useLineAuth } from "./useLineAutth";
+import { useDetectMode } from "./useDetectMode";
+import { useDetectRole } from "./useDetectRole";
+import { useLineAuth } from "./useLineAuth";
 
 export const useSaveLineUserInfo = () => {
 	const { userLineInfo, error } = useLineAuth();
 	const dispatch = useDispatch<AppDispatch>();
-	const role = useDetectUserRole();
-	const { navigateAfterLineAuth, navigateToFail } = useNavigation();
+	const role = useDetectRole();
+	const mode = useDetectMode();
+	const { navigateAfterLineAuth, navigateToFail, navigateDashboard } =
+		useNavigation();
 
 	useEffect(() => {
-		if (userLineInfo) {
+		if (userLineInfo && mode === "register") {
 			const { userId, pictureUrl, line_token } = userLineInfo;
 			dispatch(setRegisterUserInfo({ pictureUrl, lineId: userId, role }));
 			dispatch(setLineToken(line_token));
 			navigateAfterLineAuth(role);
+		} else if (userLineInfo && mode === "login") {
+			const { userId, pictureUrl, line_token } = userLineInfo;
+			window.alert("ログインできたよ");
+			navigateDashboard();
 		}
-	}, [userLineInfo, dispatch, role, navigateAfterLineAuth]);
+	}, [
+		userLineInfo,
+		dispatch,
+		role,
+		navigateAfterLineAuth,
+		navigateDashboard,
+		mode,
+	]);
 
 	useEffect(() => {
 		if (error) {

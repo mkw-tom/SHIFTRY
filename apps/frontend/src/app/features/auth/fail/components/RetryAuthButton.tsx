@@ -1,11 +1,11 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { useDetectUserRole } from "../../callback/hooks/useDetectUserRole";
+import { useDetectRole } from "../../callback/hooks/useDetectRole";
 
 const RetryAuthButton = () => {
 	const router = useRouter();
-	const role = useDetectUserRole();
+	const role = useDetectRole();
 
 	const handleRetry = () => {
 		const path = role === "OWNER" ? "/register/owner" : "/register/staff";

@@ -27,7 +27,9 @@ const registerUIContext = createContext<RegisterUIContextType | undefined>(
 export const useRegisterSteps = () => {
 	const context = useContext(registerUIContext);
 	if (context === undefined) {
-		throw new Error("useIsRegister must be used within a IsRegisterProvider");
+		throw new Error(
+			"useRegisterStep must be used within a IsRegisterProviderStep",
+		);
 	}
 	return context;
 };

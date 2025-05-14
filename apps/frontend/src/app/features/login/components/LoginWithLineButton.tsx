@@ -3,9 +3,9 @@
 import { generateLineLoginUrl } from "@/app/lib/line";
 import React from "react";
 
-const LineAuthButton = ({ isDisabled }: { isDisabled: boolean }) => {
+const LoginWithLineButton = () => {
 	function handleLineLogin() {
-		window.location.href = generateLineLoginUrl("OWNER", "register");
+		window.location.href = generateLineLoginUrl("OWNER", "login");
 	}
 
 	return (
@@ -13,7 +13,6 @@ const LineAuthButton = ({ isDisabled }: { isDisabled: boolean }) => {
 			type="button"
 			className="btn btn-sm sm:btn-md bg-green02 rounded-full border-none w-2/3 mx-auto text-white"
 			onClick={handleLineLogin}
-			disabled={isDisabled}
 		>
 			<div className="flex items-center gap-2">
 				<svg
@@ -37,4 +36,4 @@ const LineAuthButton = ({ isDisabled }: { isDisabled: boolean }) => {
 	);
 };
 
-export default LineAuthButton;
+export default LoginWithLineButton;
