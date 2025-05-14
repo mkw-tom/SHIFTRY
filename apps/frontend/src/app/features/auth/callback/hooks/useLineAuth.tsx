@@ -22,13 +22,6 @@ export const useLineAuth = () => {
 
 		const fetchLineAuth = async () => {
 			try {
-				// const res = await fetch(`${API_URL}/api/auth/line-auth`, {
-				// 	method: "POST",
-				// 	headers: { "Content-Type": "application/json" },
-				// 	body: JSON.stringify({ code }),
-				// 	credentials: "include",
-				// });
-
 				const res = await postlineAuth(code);
 
 				if (!res.ok) {

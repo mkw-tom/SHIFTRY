@@ -1,16 +1,18 @@
 import { useRouter } from "next/navigation";
-import type { RegisterUserRole } from "./types/register-user-role";
+import type { StateRole } from "./types/line-auth";
 
 export const useNavigation = () => {
 	const router = useRouter();
 
-	const navigateAfterLineAuth = (role: RegisterUserRole) => {
+	const navigateAfterLineAuth = (role: StateRole) => {
 		if (role === "STAFF") {
 			router.push("/register/owner");
 		} else {
 			router.push("/register/owner");
 		}
 	};
+
+	const navigationLogin = () => router.push("/login");
 
 	const navigateToFail = () => router.push("/auth/fail");
 
@@ -25,5 +27,6 @@ export const useNavigation = () => {
 		navigateToInvite,
 		navigateDashboard,
 		navigateRegisterPayment,
+		navigationLogin,
 	};
 };
