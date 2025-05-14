@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
 :root {
 	--background: #ffffff;
 	--foreground: #171717;
@@ -19,6 +20,8 @@
 	--color-orange: #ea7a42;
 	--color-blue01: #298fe9;
 	--color-base: #f5f5f5;
+
+	--color-overlay: rgba(0, 0, 0, 0.4);
 }
 
 @media (prefers-color-scheme: dark) {

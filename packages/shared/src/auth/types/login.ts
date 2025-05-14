@@ -1,12 +1,14 @@
-import type { Store, User } from "../../common/types/prisma";
+import type { ShiftRequest, Store, User } from "../../common/types/prisma";
 
-export interface LoginServiceResponse {
+export interface AutoLoginServiceResponse {
 	user: User | null;
-	stores: Store[];
+	store: Store | null;
+	shiftRequests: ShiftRequest[];
 }
 
-export interface LoginResponse {
+export interface AutoLoginResponse {
 	ok: true;
 	user: User;
-	stores: Store[];
+	store: Store;
+	shiftRequests: ShiftRequest[];
 }

@@ -7,10 +7,10 @@ export interface InitServiceResponse {
 }
 export interface InitResponse {
 	ok: true;
-	user: User;
+	// user: User;
 	store: Store;
 	shiftRequest: ShiftRequest[];
-	user_token: string;
+	// user_token: string;
 	store_token: string;
 	group_token: string;
 }

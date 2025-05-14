@@ -1,12 +1,15 @@
 "use client";
+import type { RootState } from "@/app/redux/store";
 import {
 	type Dispatch,
 	type ReactNode,
 	type SetStateAction,
 	createContext,
 	useContext,
+	useEffect,
 	useState,
 } from "react";
+import { useSelector } from "react-redux";
 
 export type RegisterLoadingUIContextType = {
 	pageLoading: boolean;
@@ -32,8 +35,18 @@ export const RegisterLoadingUIProvider = ({
 }: {
 	children: ReactNode;
 }) => {
+	const token = useSelector((state: RootState) => state.token);
+
 	const [pageLoading, setPageLoading] = useState<boolean>(true);
 	const [apiLoading, setApiLoading] = useState<boolean>(false);
+	useEffect(() => {
+		if (
+			typeof token.userToken !== "undefined" &&
+			typeof token.storeToken !== "undefined"
+		) {
+			setPageLoading(false);
+		}
+	}, [token.userToken, token.storeToken]);
 
 	const value = {
 		pageLoading,
