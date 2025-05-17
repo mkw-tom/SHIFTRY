@@ -3,7 +3,6 @@
 import CallBackModal from "@/app/features/auth/callback/componets/CallBackModal";
 import { useSaveLineUserInfo } from "@/app/features/auth/callback/hooks/useSaveLineUserInfo";
 import FirstView from "@/app/features/common/components/FirstView";
-import { RegisterStepsProvider } from "@/app/features/register/owner/context/UseRegisterStepContext";
 import React, { Suspense } from "react";
 
 export const dynamic = "force-dynamic";
@@ -28,9 +27,7 @@ const Page = () => {
 				<div className="text-white text-center mt-20">読み込み中...</div>
 			}
 		>
-			<RegisterStepsProvider>
-				<CallbackPageContent />
-			</RegisterStepsProvider>
+			<CallbackPageContent />
 		</Suspense>
 	);
 };
