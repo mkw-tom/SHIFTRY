@@ -10,10 +10,10 @@ const LoginFormArea = () => {
 				</h2>
 
 				<div className="flex flex-col gap-5 mt-5">
-					<p className="text-center text-xs font-bold py-3">
+					{/* <p className="text-center text-xs font-bold py-3">
 						LINEでログインする
 						<br />
-					</p>
+					</p> */}
 					<LoginWithLineButton />
 				</div>
 			</div>

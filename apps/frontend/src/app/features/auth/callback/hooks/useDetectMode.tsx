@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 export const useDetectMode = (): StateMode => {
 	const searchParams = useSearchParams();
 	const state = searchParams.get("state");
-	const mode = state?.split(":")[1]; // "OWNER:register" → "register"
+	const mode = state?.split(":")[1];
 
-	return mode === "login" ? "login" : "register"; // デフォルトをregisterにしてもOK
+	return mode === "login" ? "login" : "register";
 };

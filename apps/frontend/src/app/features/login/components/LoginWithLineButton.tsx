@@ -30,7 +30,7 @@ const LoginWithLineButton = () => {
 						/>
 					</g>
 				</svg>
-				LINEで登録
+				LINEでログイン
 			</div>
 		</button>
 	);

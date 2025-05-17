@@ -12,7 +12,7 @@ const FirstView = () => {
 				className="object-cover mx-auto"
 			/>
 			<p className="ml-3 text-center font-bold text-sm mt-2 text-white">
-				シフトのやりとり、もっと気軽に。
+				LINEで、かんたんシフト管理。
 			</p>
 		</div>
 	);
