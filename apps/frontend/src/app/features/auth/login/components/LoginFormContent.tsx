@@ -29,17 +29,10 @@ const LoginFormContent = () => {
 
 		const loginFlow = async () => {
 			await handleLogin({ lineToken: lineToken as string });
-
-			if (stores.length === 1) {
-				await handleInit({
-					userToken: userToken as string,
-					storeId: stores[0].id,
-				});
-			}
 		};
 
 		loginFlow();
-	}, [lineToken, handleLogin, handleInit, stores, userToken]);
+	}, [lineToken, handleLogin]);
 
 	if (loginError !== null || initError !== null) {
 		return <LoginError />;
