@@ -26,7 +26,6 @@ const LoginFormContent = () => {
 	useEffect(() => {
 		if (!lineToken || hasRun.current) return;
 		hasRun.current = true;
-		hasRun.current = true;
 
 		const loginFlow = async () => {
 			await handleLogin({ lineToken: lineToken as string });

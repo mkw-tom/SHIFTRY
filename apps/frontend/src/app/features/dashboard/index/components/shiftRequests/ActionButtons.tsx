@@ -1,5 +1,5 @@
 "use client";
-import type { RequestStatus } from "@prisma/client";
+import type { RequestStatus } from "@shared/common/types/prisma";
 import type { ShiftRequest } from "@shared/common/types/prisma";
 import {
 	DrawerView,
