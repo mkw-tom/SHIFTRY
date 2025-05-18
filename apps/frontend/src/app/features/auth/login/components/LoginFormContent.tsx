@@ -10,52 +10,52 @@ import LoginWithLineButton from "./LoginWithLineButton";
 import SelectStoreForm from "./SelectStoreForm";
 
 const LoginFormContent = () => {
-  const { stores } = useSelector((state: RootState) => state.stores);
-  const { lineToken, userToken } = useSelector(
-    (state: RootState) => state.token
-  );
-  const {
-    isLoading: loginLoading,
-    error: loginError,
-    handleLogin,
-  } = useLogin();
-  const { isLoading: initLoading, error: initError, handleInit } = useInit();
+	const { stores } = useSelector((state: RootState) => state.stores);
+	const { lineToken, userToken } = useSelector(
+		(state: RootState) => state.token,
+	);
+	const {
+		isLoading: loginLoading,
+		error: loginError,
+		handleLogin,
+	} = useLogin();
+	const { isLoading: initLoading, error: initError, handleInit } = useInit();
 
-  const hasRun = useRef(false);
+	const hasRun = useRef(false);
 
-  useEffect(() => {
-    if (!lineToken || hasRun.current) return;
-    hasRun.current = true;
-    hasRun.current = true;
+	useEffect(() => {
+		if (!lineToken || hasRun.current) return;
+		hasRun.current = true;
+		hasRun.current = true;
 
-    const loginFlow = async () => {
-      await handleLogin({ lineToken: lineToken as string });
+		const loginFlow = async () => {
+			await handleLogin({ lineToken: lineToken as string });
 
-      if (stores.length === 1) {
-        await handleInit({
-          userToken: userToken as string,
-          storeId: stores[0].id,
-        });
-      }
-    };
+			if (stores.length === 1) {
+				await handleInit({
+					userToken: userToken as string,
+					storeId: stores[0].id,
+				});
+			}
+		};
 
-    loginFlow();
-  }, [lineToken, handleLogin, handleInit, stores, userToken]);
+		loginFlow();
+	}, [lineToken, handleLogin, handleInit, stores, userToken]);
 
-  if (loginError !== null || initError !== null) {
-    return <LoginError />;
-  }
+	if (loginError !== null || initError !== null) {
+		return <LoginError />;
+	}
 
-  if (loginLoading || initLoading) {
-    return <LoginLoading />;
-  }
+	if (loginLoading || initLoading) {
+		return <LoginLoading />;
+	}
 
-  if (lineToken && stores.length > 1) {
-    return <SelectStoreForm />;
-  }
+	if (lineToken && stores.length > 1) {
+		return <SelectStoreForm />;
+	}
 
-  return <LoginWithLineButton />;
-  // return <SelectStoreForm />;
+	return <LoginWithLineButton />;
+	// return <SelectStoreForm />;
 };
 
 export default LoginFormContent;
