@@ -22,7 +22,7 @@ export const init = async ({
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
-			"x-user-id": userToken,
+			Authorization: `Bearer ${userToken}`,
 		},
 		body: JSON.stringify({ storeId: storeId }),
 	});
