@@ -1,5 +1,5 @@
+import LoginFormArea from "@/app/features/auth/login/components/LoginFormArea";
 import FirstView from "@/app/features/common/components/FirstView";
-import LoginFormArea from "../features/login/components/LoginFormArea";
 
 const Page = () => {
 	return (

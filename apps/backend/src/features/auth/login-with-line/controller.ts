@@ -1,13 +1,13 @@
-import type { LoginWithLineResponse } from "@shared/auth/types/re-login";
+import type { LoginResponse } from "@shared/auth/types/login";
 import type { ErrorResponse } from "@shared/common/types/errors";
 import type { Request, Response } from "express";
 import { getStoreFromUser } from "../../../repositories/userStore.repository";
 import { generateJWT } from "../../../utils/JWT/jwt";
 import { verifyUserByLineId } from "../../common/authorization.service";
 
-export const loginWithLineController = async (
+export const loginController = async (
 	req: Request,
-	res: Response<LoginWithLineResponse | ErrorResponse>,
+	res: Response<LoginResponse | ErrorResponse>,
 ): Promise<void> => {
 	try {
 		const lineId = req.lineId as string;
