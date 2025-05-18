@@ -26,8 +26,8 @@ const HomeContent = () => {
 			const isLoggedIn = !!user?.id && !!store?.id && stores.length > 0;
 			const hasTokens = !!userToken && !!storeToken && !!groupToken;
 
-			if (isLoggedIn) return;
-			if (hasRun.current || !hasTokens) {
+			if (isLoggedIn || hasRun.current) return;
+			if (!hasTokens) {
 				setError(true);
 				return;
 			}
@@ -47,7 +47,7 @@ const HomeContent = () => {
 		handleAutoLogin,
 	]);
 
-	if (error) {
+	if (error === true) {
 		return <AutoLoginError />;
 	}
 	if (isLoading) {

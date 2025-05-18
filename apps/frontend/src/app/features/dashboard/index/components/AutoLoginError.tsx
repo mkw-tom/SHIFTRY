@@ -27,7 +27,7 @@ const AutoLoginError = () => {
 								<button
 									type="button"
 									className="btn btn-error rounded-full btn-md"
-									onClick={() => navigateLogin()}
+									onClick={reTryLogin}
 								>
 									ログイン画面へ
 								</button>
