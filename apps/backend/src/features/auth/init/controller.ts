@@ -13,7 +13,7 @@ const InitController = async (
 		const userId = req.userId as string;
 		const { storeId } = storeIdValidate.parse(req.body);
 
-		const { store, shiftRequest } = await Init(userId, storeId);
+		const { store, shiftRequests } = await Init(userId, storeId);
 		// const user_token = generateJWT({ userId: user.id });
 		const store_token = generateJWT({ storeId: store.id });
 		const group_token = generateJWT({ groupId: store.groupId as string });
@@ -24,7 +24,7 @@ const InitController = async (
 		res.json({
 			ok: true,
 			store,
-			shiftRequest,
+			shiftRequests,
 			store_token,
 			group_token,
 		});

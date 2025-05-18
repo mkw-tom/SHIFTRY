@@ -12,7 +12,7 @@ export const useNavigation = () => {
 		}
 	};
 
-	const navigationLogin = () => router.push("/login");
+	const navigateLogin = () => router.push("/auth/login");
 
 	const navigateToFail = () => router.push("/auth/fail");
 
@@ -27,6 +27,6 @@ export const useNavigation = () => {
 		navigateToInvite,
 		navigateDashboard,
 		navigateRegisterPayment,
-		navigationLogin,
+		navigateLogin,
 	};
 };

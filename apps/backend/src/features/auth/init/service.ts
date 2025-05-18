@@ -7,7 +7,7 @@ const Init = async (
 	userId: string,
 	storeId: string,
 ): Promise<InitServiceResponse> => {
-	const [user, store, shiftRequest] = await Promise.all([
+	const [user, store, shiftRequests] = await Promise.all([
 		getUserById(userId),
 		getStoreById(storeId),
 		getShiftRequestByStoreId(storeId),
@@ -16,7 +16,7 @@ const Init = async (
 		throw new Error("data is not found");
 	}
 
-	return { user, store, shiftRequest };
+	return { user, store, shiftRequests };
 };
 
 export default Init;

@@ -1,18 +1,56 @@
 "use client";
 
 import { generateLineLoginUrl } from "@/app/lib/line";
+import { setStores } from "@/app/redux/slices/stores";
+import { setLineToken } from "@/app/redux/slices/token";
+import type { Store } from "@shared/common/types/prisma";
 import React from "react";
+import { useDispatch } from "react-redux";
+
+export const dummyStores: Store[] = [
+	{
+		id: "store-001",
+		name: "渋谷コーヒー店",
+		groupId: "group-001",
+		storeId: null,
+		createdAt: new Date("2024-09-01T10:00:00.000Z"),
+		updatedAt: new Date("2024-09-10T10:00:00.000Z"),
+	},
+	{
+		id: "store-002",
+		name: "新宿ブックカフェ",
+		groupId: null,
+		storeId: "store-1002",
+		createdAt: new Date("2024-10-15T12:30:00.000Z"),
+		updatedAt: new Date("2024-10-20T12:30:00.000Z"),
+	},
+	{
+		id: "store-003",
+		name: "池袋ベーカリー",
+		groupId: "group-003",
+		storeId: "store-1003",
+		createdAt: new Date("2024-11-20T08:45:00.000Z"),
+		updatedAt: new Date("2024-11-25T09:00:00.000Z"),
+	},
+];
 
 const LoginWithLineButton = () => {
+	const dispatch = useDispatch();
+
 	function handleLineLogin() {
 		window.location.href = generateLineLoginUrl("OWNER", "login");
 	}
+	// const dummyLoginFunc = () => {
+	// 	dispatch(setLineToken("dummy"));
+	// 	dispatch(setStores(dummyStores));
+	// };
 
 	return (
 		<button
 			type="button"
 			className="btn btn-sm sm:btn-md bg-green02 rounded-full border-none w-2/3 mx-auto text-white"
 			onClick={handleLineLogin}
+			// onClick={dummyLoginFunc}
 		>
 			<div className="flex items-center gap-2">
 				<svg

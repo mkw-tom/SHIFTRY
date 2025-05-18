@@ -16,8 +16,11 @@ export const userSlice = createSlice({
 		setStores: (state, action: PayloadAction<Store[]>) => {
 			state.stores = action.payload;
 		},
+		clearStores: (state) => {
+			state.stores = [];
+		},
 	},
 });
 
-export const { setStores } = userSlice.actions;
+export const { setStores, clearStores } = userSlice.actions;
 export default userSlice.reducer;
