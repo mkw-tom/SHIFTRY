@@ -6,7 +6,7 @@ import { attachUserId } from "../../middlewares/request/attachUserId";
 import { autoLoginController } from "./auto-login/controller";
 import InitController from "./init/controller";
 import lineAuthController from "./line-auth/controller";
-import { loginWithLineController } from "./login-with-line/controller";
+import { loginController } from "./login-with-line/controller";
 import registerOwnerController from "./register-owner/controller";
 import registerStaffController from "./register-staff/controller";
 const router = express.Router();
@@ -20,7 +20,7 @@ router.post(
 	attachGroupId,
 	autoLoginController,
 );
-router.post("/login", attachLineId, loginWithLineController);
+router.post("/login", attachLineId, loginController);
 router.post("/register-owner", attachLineId, registerOwnerController);
 router.post("/register-staff", attachLineId, registerStaffController);
 

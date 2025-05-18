@@ -14,7 +14,7 @@ export const useSaveLineUserInfo = () => {
 	const dispatch = useDispatch<AppDispatch>();
 	const role = useDetectRole();
 	const mode = useDetectMode();
-	const { navigateAfterLineAuth, navigateToFail, navigateDashboard } =
+	const { navigateAfterLineAuth, navigateToFail, navigateLogin } =
 		useNavigation();
 
 	useEffect(() => {
@@ -24,17 +24,17 @@ export const useSaveLineUserInfo = () => {
 			dispatch(setLineToken(line_token));
 			navigateAfterLineAuth(role);
 		} else if (userLineInfo && mode === "login") {
-			const { userId, pictureUrl, line_token } = userLineInfo;
-			window.alert("ログインできたよ");
-			navigateDashboard();
+			const { line_token } = userLineInfo;
+			dispatch(setLineToken(line_token));
+			navigateLogin();
 		}
 	}, [
 		userLineInfo,
 		dispatch,
 		role,
-		navigateAfterLineAuth,
-		navigateDashboard,
 		mode,
+		navigateAfterLineAuth,
+		navigateLogin,
 	]);
 
 	useEffect(() => {
