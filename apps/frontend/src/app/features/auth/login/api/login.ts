@@ -11,7 +11,7 @@ export const login = async (
 	if (!lineToken) {
 		throw new Error("code is not found");
 	}
-	const res = await fetch(`${API_URL}/api/auth/auto-login`, {
+	const res = await fetch(`${API_URL}/api/auth/login`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
