@@ -1,4 +1,4 @@
-import type { AutoLoginResponse } from "@shared/auth/types/login";
+import type { AutoLoginResponse } from "@shared/auth/types/auto-login";
 import type { ErrorResponse } from "@shared/common/types/errors";
 import type { Request, Response } from "express";
 import autoLogin from "./service";
