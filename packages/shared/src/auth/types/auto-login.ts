@@ -8,6 +8,9 @@ export interface AutoLoginServiceResponse {
 
 export interface AutoLoginResponse {
 	ok: true;
+	user_token: string;
+	store_token: string;
+	group_token: string;
 	user: User;
 	store: Store;
 	shiftRequests: ShiftRequest[];
