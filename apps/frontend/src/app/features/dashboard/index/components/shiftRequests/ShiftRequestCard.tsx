@@ -41,20 +41,6 @@ const ShiftRequestCard = ({ data }: { data: ShiftRequest }) => {
 			</p>
 			<div className="mt-3 flex items-center justify-end gap-2">
 				<ActionButtons status={data.status} data={data} />
-				{/* <button
-          type="button"
-          className="w-28 h-7 rounded-full bg-green03 text-xs text-green02 font-bold border-none shadow-sm"
-          onClick={() => darawerOpen(DrawerView.STATUS)}
-        >
-          提出確認・回収
-        </button>
-        <button
-          type="button"
-          className="w-28 h-7 rounded-full bg-green02 text-xs text-white font-bold border-none shadow-sm"
-          onClick={() => darawerOpen(DrawerView.SUBMIT)}
-        >
-          シフト提出
-        </button> */}
 			</div>
 		</li>
 	);
