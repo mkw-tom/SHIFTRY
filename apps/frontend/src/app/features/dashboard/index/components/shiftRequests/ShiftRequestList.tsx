@@ -1,5 +1,13 @@
+"use client";
+import type { RootState } from "@/app/redux/store";
 import type { ShiftRequest } from "@shared/common/types/prisma";
 import React from "react";
+import { MdAdd } from "react-icons/md";
+import { useSelector } from "react-redux";
+import {
+	DrawerView,
+	useBottomDrawer,
+} from "../../../common/context/useBottomDrawer";
 import ShiftRequestCard from "./ShiftRequestCard";
 
 const ShiftRequestList = () => {
@@ -109,10 +117,34 @@ const ShiftRequestList = () => {
 			deadline: new Date("2025-05-06"),
 		},
 	] as unknown as ShiftRequest[];
+
+	const { shiftRequests } = useSelector(
+		(state: RootState) => state.shiftReuqests,
+	);
+	const { darawerOpen } = useBottomDrawer();
+
+	if (shiftRequests.length === 0) {
+		return (
+			<section className="w-11/12 mx-auto mt-5 border-2 border-dashed border-gray01 h-44 rounded-sm hover:bg-gray02">
+				<button
+					type="button"
+					className="w-full flex flex-col gap-5 items-center justify-center h-full bg-green03"
+					onClick={() => darawerOpen(DrawerView.CREATE_REQUEST, null)}
+				>
+					<h2 className="font-bold text-sm">シフトデータがありません。</h2>
+					<div className="btn w-auto border-none h-7 rounded-full bg-green02 text-xs text-white font-bold shadow-sm">
+						<MdAdd className="text-white font-bold" />
+						シフト提出依頼を作成する
+					</div>
+				</button>
+			</section>
+		);
+	}
+
 	return (
 		<section className="w-full max-h-[600px] mt-5 overflow-hidden">
 			<ul className="w-11/12 h-auto mx-auto flex flex-col gap-5 overflow-y-scroll max-h-[580px] pb-96">
-				{dummy.map((data) => (
+				{shiftRequests.map((data) => (
 					<ShiftRequestCard key={data.id} data={data} />
 				))}
 			</ul>
