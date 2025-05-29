@@ -70,10 +70,9 @@ const SpecialShiftForm = () => {
 	return (
 		<div className="h-[400px] pb-56 overflow-y-auto">
 			<div className="w-full grid grid-cols-2 gap-2 items-center justify-between my-2 pl-2">
-				{/* 特別シフト登録モーダル */}
 				<button
 					type="button"
-					className="text-white btn btn-sm bg-green01 border-none rounded-full"
+					className="btn text-white btn-sm bg-green01 border-none rounded-full"
 					onClick={() => {
 						const dialog = document.getElementById(
 							"special_modal",
@@ -100,16 +99,19 @@ const SpecialShiftForm = () => {
 						<div className="modal-action w-full ">
 							<form method="dialog">
 								{/* if there is a button in form, it will close the modal */}
-
 								<button
-									type="button"
+									type="submit"
 									className="btn bg-gray02 text-white border-none "
 								>
 									中止
 								</button>
 								<button
-									type="button"
-									className={`btn   border-none w-32 ml-1 ${!inputDay ? "text-gray02 bg-gray01 pointer-events-none" : "text-green02 bg-green03 "}`}
+									type="submit"
+									className={`btn  border-none w-32 ml-1 ${
+										!inputDay
+											? "text-gray02 bg-gray01 pointer-events-none"
+											: "text-green02 bg-green03 "
+									}`}
 									onClick={() => {
 										handleAddSpecialDay(inputDay);
 										setOpenAddSpecialShiftModal(true);
@@ -122,7 +124,6 @@ const SpecialShiftForm = () => {
 					</div>
 				</dialog>
 				{/* 臨時休業日モーダル */}
-
 				<button
 					type="button"
 					className="text-white btn btn-sm bg-gray02 border-none rounded-full "
@@ -153,16 +154,19 @@ const SpecialShiftForm = () => {
 						</p>
 						<div className="modal-action">
 							<form method="dialog">
-								{/* if there is a button in form, it will close the modal */}
 								<button
-									type="button"
+									type="submit"
 									className="btn bg-gray02 text-white border-none "
 								>
 									中止
 								</button>
 								<button
-									type="button"
-									className={`btn   border-none w-32 ml-1 ${!inputDay ? "text-gray02 bg-gray01 pointer-events-none" : "text-green02 bg-green03 "}`}
+									type="submit"
+									className={`btn   border-none w-32 ml-1 ${
+										!inputDay
+											? "text-gray02 bg-gray01 pointer-events-none"
+											: "text-green02 bg-green03 "
+									}`}
 									onClick={() => handleAddClosedDate(inputDay)}
 								>
 									登録
@@ -200,7 +204,9 @@ const SpecialShiftForm = () => {
 								</ul>
 							) : (
 								<p
-									className={`${day === inputDay ? "text-gray02 " : "text-error"} opacity-80 text-sm  pl-2 flex items-center gap-1`}
+									className={`${
+										day === inputDay ? "text-gray02 " : "text-error"
+									} opacity-80 text-sm  pl-2 flex items-center gap-1`}
 								>
 									<TbCancel />
 									<span>{day === inputDay ? "シフト未登録" : "臨時休業"}</span>
