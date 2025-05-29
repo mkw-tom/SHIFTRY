@@ -399,7 +399,7 @@ const AddSpecialShiftModal = ({
 				<div className="modal-action">
 					<form method="dialog">
 						<button
-							type="button"
+							type="submit"
 							className={`btn bg-gray01 ${inputDay === "" && "hidden"}`}
 							onClick={() => {
 								const dialog = document.getElementById(
@@ -413,7 +413,7 @@ const AddSpecialShiftModal = ({
 							戻る
 						</button>
 						<button
-							type="button"
+							type="submit"
 							className={`btn   border-none ${
 								shifts.length === 0
 									? "pointer-events-none bg-gray01 text-gray02 "

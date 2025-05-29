@@ -381,7 +381,7 @@ const AddWeekShiftModal = ({
 				<div className="modal-action">
 					<form method="dialog">
 						<button
-							type="button"
+							type="submit"
 							className="btn bg-gray02 text-white border-none"
 							disabled={edit.status}
 						>

@@ -24,7 +24,7 @@ const BottomDrawer = () => {
 			/>
 			<div className="">
 				<div
-					className={`fixed h-[600px] w-full bottom-0 bg-base z-30 rounded-t-xl transition duration-150 ease-in-out ${
+					className={`fixed h-[600px] w-full bottom-0 bg-base z-30 rounded-t-xl transition duration-200 ease-in-out ${
 						!isOpen && "translate-y-[600px] "
 					} `}
 				>
