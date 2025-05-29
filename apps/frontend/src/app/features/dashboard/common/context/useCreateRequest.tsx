@@ -57,7 +57,6 @@ export const CreateRequestProvider = ({
 	children: ReactNode;
 }) => {
 	const [step, setStep] = useState<CreateRequestStep>(CreateRequestStep.Period);
-
 	const [formData, setFormData] = useState<UpsertShiftRequetType>(formDataInit);
 
 	function nextStep() {

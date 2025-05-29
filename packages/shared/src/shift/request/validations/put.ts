@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { RequestStatus, ShiftType } from "../../../common/types/prisma";
 
-const TimeSlot = z.string().regex(/^\d{2}:\d{2}-\d{2}:\d{2}$/, {
-	message: "Time must be in format HH:MM-HH:MM",
+const TimeSlot = z.string().regex(/^\d{2}:\d{2}-\d{2}:\d{2}\*\d+$/, {
+	message: "Time must be in format HH:MM-HH:MM*X",
 });
 const DefaultTimePositionsSchema = z.object({
 	Monday: z.array(TimeSlot),

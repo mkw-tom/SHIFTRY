@@ -4,9 +4,10 @@ import { DrawerView, useBottomDrawer } from "../../context/useBottomDrawer";
 import { CreateRequestProvider } from "../../context/useCreateRequest";
 import Adjustment from "./Adjustment";
 import Confirm from "./Confirm";
-import CreateRequest from "./CreateRequest";
 import Status from "./Status";
 import Submit from "./Submit";
+import ActionButton from "./create-request/ActionButton";
+import CreateRequest from "./create-request/CreateRequest";
 import DrawerHead from "./elements/DrawerHead";
 
 const BottomDrawer = () => {
@@ -23,8 +24,8 @@ const BottomDrawer = () => {
 			/>
 			<div className="">
 				<div
-					className={`fixed h-[650px] w-full bottom-0 bg-base z-30 rounded-t-xl transition duration-150 ease-in-out ${
-						!isOpen && "translate-y-[650px] "
+					className={`fixed h-[600px] w-full bottom-0 bg-base z-30 rounded-t-xl transition duration-150 ease-in-out ${
+						!isOpen && "translate-y-[600px] "
 					} `}
 				>
 					<div className="w-full h-8 flex items-center ">
@@ -33,7 +34,7 @@ const BottomDrawer = () => {
 							className="bg-gray02 w-32 h-2 mx-auto rounded-full"
 							onClick={drawerClose}
 						/>
-						{(view === DrawerView.ADJUSTMENT ||
+						{/* {(view === DrawerView.ADJUSTMENT ||
 							view === DrawerView.SUBMIT ||
 							view === DrawerView.CREATE_REQUEST) && (
 							<button
@@ -43,13 +44,14 @@ const BottomDrawer = () => {
 							>
 								下書き保存
 							</button>
-						)}
+						)} */}
 					</div>
 					<div className="w-11/12 mx-auto ">
 						<DrawerHead />
 						{view === DrawerView.CREATE_REQUEST && (
 							<CreateRequestProvider>
 								<CreateRequest />
+								<ActionButton />
 							</CreateRequestProvider>
 						)}
 						{view === DrawerView.SUBMIT && <Submit />}
