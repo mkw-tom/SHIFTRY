@@ -35,12 +35,12 @@ const DrawerHead = () => {
 					{MDW(currentData?.weekEnd as Date)}
 				</h2>
 			)}
-			<button
+			{/* <button
 				type="button"
 				className="w-full h-8 bg-green02 shadow-sm rounded-full font-bold text-sm text-white"
 			>
 				{ChangeBtnTextByView(view)}
-			</button>
+			</button> */}
 		</div>
 	);
 };

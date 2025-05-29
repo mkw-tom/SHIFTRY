@@ -131,7 +131,9 @@ const ShiftRequestList = () => {
 					className="w-full flex flex-col gap-5 items-center justify-center h-full bg-green03"
 					onClick={() => darawerOpen(DrawerView.CREATE_REQUEST, null)}
 				>
-					<h2 className="font-bold text-sm">シフトデータがありません。</h2>
+					<h2 className="font-bold text-sm text-black opacity-60">
+						シフトデータがありません。
+					</h2>
 					<div className="btn w-auto border-none h-7 rounded-full bg-green02 text-xs text-white font-bold shadow-sm">
 						<MdAdd className="text-white font-bold" />
 						シフト提出依頼を作成する
