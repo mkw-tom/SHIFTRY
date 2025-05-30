@@ -47,9 +47,9 @@ const HomeContent = () => {
 		handleAutoLogin,
 	]);
 
-	// if (error === true) {
-	// 	return <AutoLoginError />;
-	// }
+	if (error === true) {
+		return <AutoLoginError />;
+	}
 	if (isLoading) {
 		return <AutoLoginLoading />;
 	}
