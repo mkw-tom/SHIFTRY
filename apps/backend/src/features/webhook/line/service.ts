@@ -59,7 +59,7 @@ export const sendGroupMessageByTrigger = async (
 			},
 		};
 
-		await apiClient.post("/", {
+		await apiClient.post("/v2/bot/message/reply", {
 			replyToken: replyToken,
 			messages: [message],
 		});
