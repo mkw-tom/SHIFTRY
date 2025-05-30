@@ -1,10 +1,4 @@
-import { useNavigation } from "@/app/lib/navigation";
-import {
-	saveShiftRequest,
-	setShiftRequests,
-} from "@/app/redux/slices/shiftRequests";
-import { setStore } from "@/app/redux/slices/store";
-import { setGroupToken, setStoreToken } from "@/app/redux/slices/token";
+import { saveShiftRequest } from "@/app/redux/slices/shiftRequests";
 import type { AppDispatch } from "@/app/redux/store";
 import type { UpsertShiftRequetType } from "@shared/shift/request/validations/put";
 import { useState } from "react";
@@ -15,7 +9,6 @@ export const useUpsertShiftReqeust = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const dispatch = useDispatch<AppDispatch>();
-	const { navigateDashboard } = useNavigation();
 
 	const handleUpsertShiftRequest = async ({
 		userToken,

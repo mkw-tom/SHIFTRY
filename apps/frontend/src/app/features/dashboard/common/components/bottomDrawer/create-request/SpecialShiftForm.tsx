@@ -6,12 +6,6 @@ import { useCreateRequest } from "../../../context/useCreateRequest";
 import AddSpecialShiftModal from "./AddSpecialShiftModal";
 
 const SpecialShiftForm = () => {
-	type InputValuesType = {
-		startTime: string;
-		endTime: string;
-		amount: number;
-	};
-
 	const { formData, setFormData } = useCreateRequest();
 	const specialShiftData = formData.requests.overrideDates ?? {};
 
@@ -28,7 +22,6 @@ const SpecialShiftForm = () => {
 			dialog?.showModal();
 		}
 	}, [inputDay, openAddSpecialShiftModal]);
-	console.log(specialShiftData);
 
 	function handleAddSpecialDay(inputDay: string) {
 		setFormData((prev) => ({
@@ -41,6 +34,22 @@ const SpecialShiftForm = () => {
 				},
 			},
 		}));
+	}
+
+	function removeOverrideDay(day: string) {
+		setFormData((prev) => {
+			// shallow copy してから削除
+			const updatedOverrideDates = { ...prev.requests.overrideDates };
+			delete updatedOverrideDates[day];
+
+			return {
+				...prev,
+				requests: {
+					...prev.requests,
+					overrideDates: updatedOverrideDates,
+				},
+			};
+		});
 	}
 
 	function handleAddClosedDate(inputDay: string) {
@@ -188,7 +197,7 @@ const SpecialShiftForm = () => {
 						</div>
 						<div className="list-col-grow">
 							{shifts.length > 0 ? (
-								<ul className="list-disc flex flex-col gap-1 w-full pl-2">
+								<ul className="list-disc flex flex-col gap-1 w-full">
 									{shifts.map((position, idx) => (
 										<li key={position} className="flex items-center gap-3 ">
 											<span className="flex items-center gap-1 text-black">
@@ -206,15 +215,15 @@ const SpecialShiftForm = () => {
 								<p
 									className={`${
 										day === inputDay ? "text-gray02 " : "text-error"
-									} opacity-80 text-sm  pl-2 flex items-center gap-1`}
+									} opacity-80 text-sm flex items-center gap-1`}
 								>
 									<TbCancel />
-									<span>{day === inputDay ? "シフト未登録" : "臨時休業"}</span>
+									<span>臨時休業</span>
 								</p>
 							)}
 						</div>
 						{/* Open the modal using document.getElementById('ID').showModal() method */}
-						{shifts.length > 0 && (
+						{shifts.length > 0 ? (
 							<button
 								type="button"
 								className="btn btn-sm rounded-full bg-green03 text-green02 border-none"
@@ -227,6 +236,23 @@ const SpecialShiftForm = () => {
 								}}
 							>
 								追加
+							</button>
+						) : (
+							<button
+								type="button"
+								className="text-white btn btn-sm btn-error shadow-none border-none rounded-full "
+								onClick={() => {
+									if (
+										confirm(
+											`臨時休業日：${YMDW(
+												new Date(day),
+											)}のデータを取り消しますか？`,
+										)
+									)
+										removeOverrideDay(day);
+								}}
+							>
+								削除
 							</button>
 						)}
 						<AddSpecialShiftModal
