@@ -1,28 +1,23 @@
-import { saveShiftRequest } from "@/app/redux/slices/shiftRequests";
-import type { AppDispatch } from "@/app/redux/store";
-import type { UpsertShiftRequetType } from "@shared/shift/request/validations/put";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { upsertShiftRequest } from "./api";
+import { sendShiftRequest } from "./api";
 
-export const useUpsertShiftReqeust = () => {
+export const useSendShiftReqeust = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
-	const dispatch = useDispatch<AppDispatch>();
 
-	const handleUpsertShiftRequest = async ({
+	const handleSendShiftRequest = async ({
 		userToken,
 		storeToken,
-		formData,
+		groupToken,
 	}: {
 		userToken: string;
 		storeToken: string;
-		formData: UpsertShiftRequetType;
+		groupToken: string;
 	}) => {
 		setIsLoading(true);
 		setError(null);
 		try {
-			const res = await upsertShiftRequest({ userToken, storeToken, formData });
+			const res = await sendShiftRequest({ userToken, storeToken, groupToken });
 			if (!res.ok) {
 				if ("errors" in res) {
 					setError("通信エラーが発生しました");
@@ -33,8 +28,7 @@ export const useUpsertShiftReqeust = () => {
 				console.warn("エラー:", res.message);
 				return;
 			}
-
-			dispatch(saveShiftRequest(res.shiftRequest));
+			alert("lineグループに休み希望提出を通知しました");
 		} catch (err) {
 			setError("通信エラーが発生しました。");
 			console.warn("エラー:", error);
@@ -43,5 +37,5 @@ export const useUpsertShiftReqeust = () => {
 		}
 	};
 
-	return { handleUpsertShiftRequest, isLoading, error };
+	return { handleSendShiftRequest, isLoading, error };
 };

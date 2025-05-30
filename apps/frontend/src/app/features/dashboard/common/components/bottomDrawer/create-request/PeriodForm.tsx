@@ -3,7 +3,7 @@ import type React from "react";
 import { useCreateRequest } from "../../../context/useCreateRequest";
 
 const PeriodForm = () => {
-	const { step, setStep, setFormData, formData } = useCreateRequest();
+	const { setFormData, formData } = useCreateRequest();
 	const now = new Date();
 	const today = now.toISOString().split("T")[0];
 	const nowDateTime = now.toISOString().slice(0, 16);

@@ -4,6 +4,7 @@ import { RequestStatus } from "@shared/common/types/prisma";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { string } from "zod";
+import { useSendShiftReqeust } from "../../../api/send-shift-request-line/hook";
 import { useUpsertShiftReqeust } from "../../../api/upsert-shift-request/hook";
 import { DrawerView, useBottomDrawer } from "../../../context/useBottomDrawer";
 import {
@@ -12,58 +13,72 @@ import {
 } from "../../../context/useCreateRequest";
 
 const ActionButton = () => {
-	const { view, currentData } = useBottomDrawer();
+	const { view, currentData, drawerClose } = useBottomDrawer();
 	const { step, setStep, formData } = useCreateRequest();
 	const { handleUpsertShiftRequest } = useUpsertShiftReqeust();
+	const { handleSendShiftRequest } = useSendShiftReqeust();
 	const dispatch = useDispatch<AppDispatch>();
 
-	const { userToken, storeToken } = useSelector(
+	const { userToken, storeToken, groupToken } = useSelector(
 		(state: RootState) => state.token,
 	);
 
-	function testSave() {
-		// Transform formData to match the expected type for saveShiftRequest
-		if (!formData.weekStart) {
-			return alert("週の開始日がありません");
-		}
-		const transformedData = {
-			...formData,
-			weekStart: new Date(formData.weekStart),
-			weekEnd: formData.weekEnd ? new Date(formData.weekEnd) : null,
-			deadline: formData.deadline ? new Date(formData.deadline) : null,
-			requests: formData.requests, // keep as object if expected type is JsonValue
-			id: "",
-			storeId: "",
-			createdAt: new Date(),
-			updatedAt: new Date(),
-		};
-		dispatch(saveShiftRequest(transformedData));
-		if (confirm("lineグループに提出依頼を送信しますか？")) {
-			const transformedDataWithStatus = {
-				...formData,
-				weekStart: new Date(formData.weekStart),
-				weekEnd: formData.weekEnd ? new Date(formData.weekEnd) : null,
-				deadline: formData.deadline ? new Date(formData.deadline) : null,
-				requests: formData.requests,
-				id: "",
-				storeId: "",
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				status: RequestStatus.REQUEST,
-			};
-			dispatch(saveShiftRequest(transformedDataWithStatus));
-		}
-	}
+	// function testSave() {
+	//   // Transform formData to match the expected type for saveShiftRequest
+	//   if (!formData.weekStart) {
+	//     return alert("週の開始日がありません");
+	//   }
+	//   const transformedData = {
+	//     ...formData,
+	//     weekStart: new Date(formData.weekStart),
+	//     weekEnd: formData.weekEnd ? new Date(formData.weekEnd) : null,
+	//     deadline: formData.deadline ? new Date(formData.deadline) : null,
+	//     requests: formData.requests, // keep as object if expected type is JsonValue
+	//     id: "",
+	//     storeId: "",
+	//     createdAt: new Date(),
+	//     updatedAt: new Date(),
+	//   };
+	//   dispatch(saveShiftRequest(transformedData));
+	//   if (confirm("lineグループに提出依頼を送信しますか？")) {
+	//     const transformedDataWithStatus = {
+	//       ...formData,
+	//       weekStart: new Date(formData.weekStart),
+	//       weekEnd: formData.weekEnd ? new Date(formData.weekEnd) : null,
+	//       deadline: formData.deadline ? new Date(formData.deadline) : null,
+	//       requests: formData.requests,
+	//       id: "",
+	//       storeId: "",
+	//       createdAt: new Date(),
+	//       updatedAt: new Date(),
+	//       status: RequestStatus.REQUEST,
+	//     };
+	//     dispatch(saveShiftRequest(transformedDataWithStatus));
+	//   }
+	// }
 
 	async function saveShiftReqeust(
 		userToken: string | null,
 		storeToken: string | null,
+		groupToken: string | null,
 	) {
-		if (!userToken || !storeToken) {
+		if (!userToken || !storeToken || !groupToken) {
 			return alert("トークン情報がありません");
 		}
+		if (confirm("lineグループにシフト提出を依頼しますか？")) {
+			const updateStatusFormData = {
+				...formData,
+				status: RequestStatus.REQUEST,
+			};
+			await handleUpsertShiftRequest({
+				userToken,
+				storeToken,
+				formData: updateStatusFormData,
+			});
+			await handleSendShiftRequest({ userToken, storeToken, groupToken });
+			return;
+		}
 		await handleUpsertShiftRequest({ userToken, storeToken, formData });
-		if (confirm("lineグループにシフト提出を依頼しますか？")) [];
 	}
 
 	async function changeFormStep(
@@ -86,8 +101,9 @@ const ActionButton = () => {
 					setStep(CreateRequestStep.Weekly);
 					return;
 				}
-				// await saveShiftReqeust(userToken, storeToken);
-				await testSave();
+				await saveShiftReqeust(userToken, storeToken, groupToken);
+				drawerClose();
+				setStep(CreateRequestStep.Period);
 				console.log("Submitting form with data:", formData);
 				break;
 			default:
