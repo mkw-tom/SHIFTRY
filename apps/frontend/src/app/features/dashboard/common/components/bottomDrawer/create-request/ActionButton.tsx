@@ -21,56 +21,39 @@ const ActionButton = () => {
 		(state: RootState) => state.token,
 	);
 
-	// function ChangeBtnActionAndText(formData: UpsertShiftRequetType) {
-	//   switch (view) {
-	//     case DrawerView.CREATE_REQUEST:
-	//       return "スタッフに依頼";
-	//     case DrawerView.SUBMIT:
-	//       return "この内容で提出";
-	//     case DrawerView.STATUS:
-	//       return "提出状況を確認";
-	//     case DrawerView.ADJUSTMENT:
-	//       return "調整データを確定する";
-	//     case DrawerView.CONFIRM:
-	//       return "シフトを確定する";
-	//     default:
-	//       return "操作を選択";
-	//   }
-	// }
-	// function testSave() {
-	//       // Transform formData to match the expected type for saveShiftRequest
-	//     if (!formData.weekStart) {
-	//       return alert("週の開始日がありません");
-	//     }
-	//     const transformedData = {
-	//       ...formData,
-	//       weekStart: new Date(formData.weekStart),
-	//       weekEnd: formData.weekEnd ? new Date(formData.weekEnd) : null,
-	//       deadline: formData.deadline ? new Date(formData.deadline) : null,
-	//       requests: formData.requests, // keep as object if expected type is JsonValue
-	//       id: "",
-	//       storeId: "",
-	//       createdAt: new Date(),
-	//       updatedAt: new Date(),
-	//     };
-	//     dispatch(saveShiftRequest(transformedData));
-	//     if(confirm("lineグループに提出依頼を送信しますか？")){
-	//       const transformedDataWithStatus = {
-	//         ...formData,
-	//         weekStart: new Date(formData.weekStart),
-	//         weekEnd: formData.weekEnd ? new Date(formData.weekEnd) : null,
-	//         deadline: formData.deadline ? new Date(formData.deadline) : null,
-	//         requests: formData.requests,
-	//         id: "",
-	//         storeId: "",
-	//         createdAt: new Date(),
-	//         updatedAt: new Date(),
-	//         status: RequestStatus.REQUEST,
-	//       };
-	//       dispatch(saveShiftRequest(transformedDataWithStatus));
-	//     }
-
-	// }
+	function testSave() {
+		// Transform formData to match the expected type for saveShiftRequest
+		if (!formData.weekStart) {
+			return alert("週の開始日がありません");
+		}
+		const transformedData = {
+			...formData,
+			weekStart: new Date(formData.weekStart),
+			weekEnd: formData.weekEnd ? new Date(formData.weekEnd) : null,
+			deadline: formData.deadline ? new Date(formData.deadline) : null,
+			requests: formData.requests, // keep as object if expected type is JsonValue
+			id: "",
+			storeId: "",
+			createdAt: new Date(),
+			updatedAt: new Date(),
+		};
+		dispatch(saveShiftRequest(transformedData));
+		if (confirm("lineグループに提出依頼を送信しますか？")) {
+			const transformedDataWithStatus = {
+				...formData,
+				weekStart: new Date(formData.weekStart),
+				weekEnd: formData.weekEnd ? new Date(formData.weekEnd) : null,
+				deadline: formData.deadline ? new Date(formData.deadline) : null,
+				requests: formData.requests,
+				id: "",
+				storeId: "",
+				createdAt: new Date(),
+				updatedAt: new Date(),
+				status: RequestStatus.REQUEST,
+			};
+			dispatch(saveShiftRequest(transformedDataWithStatus));
+		}
+	}
 
 	async function saveShiftReqeust(
 		userToken: string | null,
@@ -103,8 +86,8 @@ const ActionButton = () => {
 					setStep(CreateRequestStep.Weekly);
 					return;
 				}
-				await saveShiftReqeust(userToken, storeToken);
-				// await testSave()
+				// await saveShiftReqeust(userToken, storeToken);
+				await testSave();
 				console.log("Submitting form with data:", formData);
 				break;
 			default:
