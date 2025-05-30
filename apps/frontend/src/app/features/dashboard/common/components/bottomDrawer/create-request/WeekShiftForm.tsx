@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { PiUser } from "react-icons/pi";
 import { useCreateRequest } from "../../../context/useCreateRequest";
 import AddWeekShiftModal from "./AddWeekShiftModal";
@@ -13,19 +12,6 @@ const WeekShiftForm = () => {
 		| "Saturday"
 		| "Sunday";
 
-	type InputValuesType = {
-		startTime: string;
-		endTime: string;
-		amount: number;
-	};
-	type EditPositionStateType = {
-		status: boolean;
-		idx: number;
-		startTime: string;
-		day: DayOfWeekType;
-		endTime: string;
-		amount: number;
-	};
 	const { formData, setFormData } = useCreateRequest();
 	const weekShiftData = formData.requests.defaultTimePositions;
 

@@ -1,16 +1,8 @@
+import { YMDW } from "@/app/features/common/hooks/useFormatDate";
 import type React from "react";
 import { useState } from "react";
 import { PiUser } from "react-icons/pi";
 import { useCreateRequest } from "../../../context/useCreateRequest";
-
-// type DayOfWeekType =
-//   | "Monday"
-//   | "Tuesday"
-//   | "Wednesday"
-//   | "Thursday"
-//   | "Friday"
-//   | "Saturday"
-//   | "Sunday";
 
 type InputValuesType = {
 	startTime: string;
@@ -177,7 +169,10 @@ const AddSpecialShiftModal = ({
 	return (
 		<dialog id={`modal_${day}`} className="modal">
 			<div className="modal-box bg-base">
-				<h3 className="text-lg text-black opacity-50 font-thin">{day}</h3>
+				<h3 className="text-lg text-black opacity-50 font-thin">
+					{YMDW(new Date(day))}
+				</h3>
+
 				<div className="py-4 w-full">
 					<div
 						className={`w-full flex flex-col gap-2 ${
@@ -254,7 +249,12 @@ const AddSpecialShiftModal = ({
 								type="button"
 								className="btn btn-sm border-2 bg-green03 text-green02  w-2/3 border-none "
 								onClick={() => addPosition(day as string, inputValues)}
-								disabled={edit.status}
+								disabled={
+									!inputValues.startTime ||
+									!inputValues.endTime ||
+									!inputValues.amount ||
+									inputValues.amount === 0
+								}
 							>
 								追加
 							</button>
@@ -398,20 +398,37 @@ const AddSpecialShiftModal = ({
 				</div>
 				<div className="modal-action">
 					<form method="dialog">
-						<button
-							type="submit"
-							className={`btn bg-gray01 ${inputDay === "" && "hidden"}`}
-							onClick={() => {
-								const dialog = document.getElementById(
-									"special_modal",
-								) as HTMLDialogElement | null;
-								dialog?.showModal();
-								setOpenAddSpecialShiftModal(false);
-								removeOverrideDay(day);
-							}}
-						>
-							戻る
-						</button>
+						{inputDay === "" ? (
+							<button
+								type="submit"
+								className="btn btn-error text-white mr-1"
+								onClick={() => {
+									if (
+										confirm(`${YMDW(new Date(day))}のデータを削除しますか？`)
+									) {
+										removeOverrideDay(day);
+									}
+								}}
+							>
+								<span>削除</span>
+							</button>
+						) : (
+							<button
+								type="submit"
+								className="btn bg-gray01"
+								onClick={() => {
+									const dialog = document.getElementById(
+										"special_modal",
+									) as HTMLDialogElement | null;
+									dialog?.showModal();
+									setOpenAddSpecialShiftModal(false);
+									removeOverrideDay(day);
+								}}
+							>
+								戻る
+							</button>
+						)}
+
 						<button
 							type="submit"
 							className={`btn   border-none ${

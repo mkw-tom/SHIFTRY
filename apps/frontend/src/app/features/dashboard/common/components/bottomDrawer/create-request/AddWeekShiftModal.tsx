@@ -236,8 +236,13 @@ const AddWeekShiftModal = ({
 							<button
 								type="button"
 								className="btn btn-sm border-2 bg-green03 text-green02  w-2/3 border-none"
-								onClick={() => addPosition(day as "Monday", inputValues)}
-								disabled={edit.status}
+								onClick={() => addPosition(day as DayOfWeekType, inputValues)}
+								disabled={
+									!inputValues.startTime ||
+									!inputValues.endTime ||
+									!inputValues.amount ||
+									inputValues.amount === 0
+								}
 							>
 								追加
 							</button>
