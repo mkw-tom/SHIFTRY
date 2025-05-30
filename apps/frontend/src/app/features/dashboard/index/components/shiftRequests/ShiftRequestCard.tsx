@@ -31,13 +31,15 @@ const ShiftRequestCard = ({ data }: { data: ShiftRequest }) => {
 				>
 					{text}
 				</div>
-				<p className="text-xs text-gray02">更新：{YMDHM(data.updatedAt)}</p>
+				<p className="text-xs text-gray02">
+					更新：{YMDHM(new Date(data.updatedAt))}
+				</p>
 			</div>
 			<h2 className="w-full text-left mt-5 text-black font-bold border-b border-gray01 pl-1">
-				{YMDW(data.weekStart)} ~ {MDW(data.weekEnd as Date)}
+				{YMDW(new Date(data.weekStart))} ~ {MDW(new Date(data.weekEnd as Date))}
 			</h2>
 			<p className="w-full text-left text-error text-xs font-bold pt-0.5 pl-1">
-				提出期限：{YMDHM(data.deadline as Date)}
+				提出期限：{YMDHM(new Date(data.deadline as Date))}
 			</p>
 			<div className="mt-3 flex items-center justify-end gap-2">
 				<ActionButtons status={data.status} data={data} />
