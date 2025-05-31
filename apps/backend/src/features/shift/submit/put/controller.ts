@@ -3,7 +3,7 @@ import type {
 	ValidationErrorResponse,
 } from "@shared/common/types/errors";
 import type { UpsertSubmittedShfitResponse } from "@shared/shift/submit/types/put";
-import { upsertSubmittedShifttValidate } from "@shared/shift/submit/validations/put";
+import { upsertSubmittedShiftValidate } from "@shared/shift/submit/validations/put";
 import type { Request, Response } from "express";
 import { upsertSubmittedShift } from "../../../../repositories/submittedShift.repository";
 import { verifyUserStore } from "../../../common/authorization.service";
@@ -19,7 +19,7 @@ const upsertSubmittedShiftController = async (
 		const storeId = req.storeId as string;
 		await verifyUserStore(userId, storeId);
 
-		const parsed = upsertSubmittedShifttValidate.safeParse(req.body);
+		const parsed = upsertSubmittedShiftValidate.safeParse(req.body);
 		if (!parsed.success) {
 			res.status(400).json({
 				ok: false,
