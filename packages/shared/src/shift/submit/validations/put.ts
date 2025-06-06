@@ -23,6 +23,7 @@ const availableWeekValidate = z.string().refine(
 		message: "形式は '曜日' または '曜日&HH:mm-HH:mm' で入力してください",
 	},
 );
+export type availableWeekType = z.infer<typeof availableWeekValidate>;
 
 // ✅ 日付 + optional 時間帯の形式（例: "2025-11-12&08:00-15:00"）
 const specificDatesValidate = z.string().refine(
@@ -39,13 +40,19 @@ const specificDatesValidate = z.string().refine(
 			"形式は 'YYYY-MM-DD' または 'YYYY-MM-DD&HH:mm-HH:mm' で入力してください",
 	},
 );
+export type specificDatesType = z.infer<typeof specificDatesValidate>;
 
 export const shiftsOfSubmittedValidate = z.object({
 	name: z
 		.string()
 		.min(1, "ニックネームは必須です")
 		.max(20, "20文字以内で入力してください"),
-	weekCount: z
+	weekCountMin: z
+		.number()
+		.int()
+		.min(0, "0〜7の間で指定してください")
+		.max(7, "0〜7の間で指定してください"),
+	weekCountMax: z
 		.number()
 		.int()
 		.min(0, "0〜7の間で指定してください")

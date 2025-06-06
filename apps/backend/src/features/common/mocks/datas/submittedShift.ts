@@ -2,7 +2,8 @@ import type { shiftsOfSubmittedType } from "@shared/common/types/json";
 
 export const mockShiftsOfSubmitted: shiftsOfSubmittedType = {
 	name: "テスト人間",
-	weekCount: 3,
+	weekCountMin: 2,
+	weekCountMax: 3,
 	availableWeeks: ["Monday&10:00-17:00", "Wednesday", "Friday&10:00-17:00"],
 	specificDates: [
 		"2025-11-10&14:00-18:00", // この日は午後のみOK

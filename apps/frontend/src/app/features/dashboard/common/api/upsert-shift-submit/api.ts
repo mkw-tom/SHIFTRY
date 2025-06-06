@@ -3,20 +3,19 @@ import type {
 	ErrorResponse,
 	ValidationErrorResponse,
 } from "@shared/common/types/errors";
-import type { UpsertShiftRequetResponse } from "@shared/shift/request/types/put";
-import type { UpsertShiftRequetType } from "@shared/shift/request/validations/put";
 import type { UpsertSubmittedShfitResponse } from "@shared/shift/submit/types/put";
+import type { UpsertSubmittedShiftInputType } from "@shared/shift/submit/validations/put";
 
-export const upsertShiftRequest = async ({
+export const upsertSubmitShift = async ({
 	userToken,
 	storeToken,
 	formData,
 }: {
 	userToken: string;
 	storeToken: string;
-	formData: UpsertShiftRequetType;
+	formData: UpsertSubmittedShiftInputType;
 }): Promise<
-	UpsertShiftRequetResponse | ErrorResponse | ValidationErrorResponse
+	UpsertSubmittedShfitResponse | ErrorResponse | ValidationErrorResponse
 > => {
 	if (!userToken) {
 		throw new Error("code is not found");

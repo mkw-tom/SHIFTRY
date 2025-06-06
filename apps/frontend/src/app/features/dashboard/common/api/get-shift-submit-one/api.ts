@@ -3,20 +3,18 @@ import type {
 	ErrorResponse,
 	ValidationErrorResponse,
 } from "@shared/common/types/errors";
-import type { UpsertShiftRequetResponse } from "@shared/shift/request/types/put";
-import type { UpsertShiftRequetType } from "@shared/shift/request/validations/put";
-import type { UpsertSubmittedShfitResponse } from "@shared/shift/submit/types/put";
+import type { GetSubmittedShiftUserOneResponse } from "@shared/shift/submit/types/get-one";
 
-export const upsertShiftRequest = async ({
+export const getSubmittedShiftUserOne = async ({
 	userToken,
 	storeToken,
-	formData,
+	shiftRequestId,
 }: {
 	userToken: string;
 	storeToken: string;
-	formData: UpsertShiftRequetType;
+	shiftRequestId: string;
 }): Promise<
-	UpsertShiftRequetResponse | ErrorResponse | ValidationErrorResponse
+	GetSubmittedShiftUserOneResponse | ErrorResponse | ValidationErrorResponse
 > => {
 	if (!userToken) {
 		throw new Error("code is not found");
@@ -24,14 +22,16 @@ export const upsertShiftRequest = async ({
 	if (!storeToken) {
 		throw new Error("code is not found");
 	}
-	const res = await fetch(`${API_URL}/api/shift/submit`, {
-		method: "PUT",
+	if (!shiftRequestId) {
+		throw new Error("shiftRequestId is not found");
+	}
+	const res = await fetch(`${API_URL}/api/shift/submit/one/${shiftRequestId}`, {
+		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
 			Authorization: `Bearer ${userToken}`,
 			"x-store-id": storeToken,
 		},
-		body: JSON.stringify(formData),
 	});
 
 	const data = await res.json();
