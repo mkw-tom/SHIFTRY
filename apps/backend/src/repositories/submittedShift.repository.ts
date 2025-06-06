@@ -39,7 +39,7 @@ export const getSubmittedShiftUser = async (
 };
 export const getSubmittedShiftUserOne = async (
 	userId: string,
-	shiftRequestId: string
+	shiftRequestId: string,
 ): Promise<SubmittedShift | null> => {
 	return await prisma.submittedShift.findUnique({
 		where: {
@@ -49,8 +49,7 @@ export const getSubmittedShiftUserOne = async (
 			},
 		},
 	});
-
-}
+};
 
 export const getSubmittedShiftsSpecific = async (
 	shiftRequestId: string,
