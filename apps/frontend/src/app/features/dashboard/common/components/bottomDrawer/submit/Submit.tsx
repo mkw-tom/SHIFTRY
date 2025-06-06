@@ -25,7 +25,8 @@ const Submit = () => {
 	const { currentData } = useBottomDrawer();
 	const { userToken, storeToken } = useSelector(
 		(state: RootState) => state.token,
-	);
+	)
+	const { user } = useSelector((state: RootState) => state.user)
 	const { handleGetSubmitShiftUserOne, isLoading: getDataLoading } =
 		useGetSubmittedShiftUserOne();
 	const { handleUpsertSubmitShift, isLoading: submitLoading } =
@@ -69,7 +70,7 @@ const Submit = () => {
 		shiftRequestId: "",
 		status: ShiftStatus.ADJUSTMENT,
 		shifts: {
-			name: "",
+			name: user?.name as string ,
 			weekCountMax: 0,
 			weekCountMin: 0,
 			availableWeeks: [],
