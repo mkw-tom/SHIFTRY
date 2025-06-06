@@ -6,6 +6,7 @@ import { MdAdd } from "react-icons/md";
 import { useSelector } from "react-redux";
 import {
 	DrawerView,
+	type ShiftRequestWithJson,
 	useBottomDrawer,
 } from "../../../common/context/useBottomDrawer";
 import ShiftRequestCard from "./ShiftRequestCard";
@@ -147,7 +148,7 @@ const ShiftRequestList = () => {
 		<section className="w-full max-h-[600px] mt-5 overflow-hidden">
 			<ul className="w-11/12 h-auto mx-auto flex flex-col gap-5 overflow-y-scroll max-h-[580px] pb-96">
 				{shiftRequests.map((data) => (
-					<ShiftRequestCard key={data.id} data={data} />
+					<ShiftRequestCard key={data.id} data={data as ShiftRequestWithJson} />
 				))}
 			</ul>
 		</section>

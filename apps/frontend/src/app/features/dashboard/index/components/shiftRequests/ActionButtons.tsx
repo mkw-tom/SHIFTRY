@@ -3,6 +3,7 @@ import type { RequestStatus } from "@shared/common/types/prisma";
 import type { ShiftRequest } from "@shared/common/types/prisma";
 import {
 	DrawerView,
+	type ShiftRequestWithJson,
 	useBottomDrawer,
 } from "../../../common/context/useBottomDrawer";
 
@@ -11,7 +12,7 @@ const ActionButtons = ({
 	data,
 }: {
 	status: RequestStatus;
-	data: ShiftRequest;
+	data: ShiftRequestWithJson;
 }) => {
 	const { darawerOpen } = useBottomDrawer();
 

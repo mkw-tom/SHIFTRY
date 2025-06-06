@@ -1,4 +1,5 @@
 "use client";
+import type { ShiftsOfRequestsType } from "@shared/common/types/json";
 import type { ShiftRequest } from "@shared/common/types/prisma";
 import {
 	Dispatch,
@@ -17,17 +18,21 @@ export enum DrawerView {
 	CONFIRM = "CONFIRM", // 出来上がり確認
 }
 
-type bottomDrawerContextType = {
-	isOpen: boolean;
-	darawerOpen: (status: DrawerView, data: ShiftRequest | null) => void;
-	drawerClose: () => void;
-	view: DrawerView | undefined;
-	currentData: ShiftRequest | null;
+export type ShiftRequestWithJson = Omit<ShiftRequest, "requests"> & {
+	requests: ShiftsOfRequestsType;
 };
 
-const bottomDrawerContext = createContext<bottomDrawerContextType | undefined>(
-	undefined,
-);
+type bottomDrawerContextType = {
+	isOpen: boolean;
+	darawerOpen: (status: DrawerView, data: ShiftRequestWithJson | null) => void;
+	drawerClose: () => void;
+	view: DrawerView | undefined;
+	currentData: ShiftRequestWithJson | null;
+};
+
+export const bottomDrawerContext = createContext<
+	bottomDrawerContextType | undefined
+>(undefined);
 
 export const useBottomDrawer = () => {
 	const context = useContext(bottomDrawerContext);
@@ -42,9 +47,11 @@ export const useBottomDrawer = () => {
 export const BottomDrawerProvider = ({ children }: { children: ReactNode }) => {
 	const [isOpen, setIsOepn] = useState<boolean>(false);
 	const [view, setView] = useState<DrawerView>();
-	const [currentData, setCurrentData] = useState<ShiftRequest | null>(null);
+	const [currentData, setCurrentData] = useState<ShiftRequestWithJson | null>(
+		null,
+	);
 
-	function darawerOpen(status: DrawerView, data: ShiftRequest | null) {
+	function darawerOpen(status: DrawerView, data: ShiftRequestWithJson | null) {
 		setIsOepn(true);
 		setView(status);
 		setCurrentData(data);

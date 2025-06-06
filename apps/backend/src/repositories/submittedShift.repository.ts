@@ -37,6 +37,19 @@ export const getSubmittedShiftUser = async (
 		where: { userId, storeId },
 	});
 };
+export const getSubmittedShiftUserOne = async (
+	userId: string,
+	shiftRequestId: string,
+): Promise<SubmittedShift | null> => {
+	return await prisma.submittedShift.findUnique({
+		where: {
+			userId_shiftRequestId: {
+				userId,
+				shiftRequestId,
+			},
+		},
+	});
+};
 
 export const getSubmittedShiftsSpecific = async (
 	shiftRequestId: string,

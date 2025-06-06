@@ -95,11 +95,11 @@ const SpecialShiftForm = () => {
 					<div className="modal-box bg-base">
 						<h3 className="text-lg text-green01 font-thin">特別な日</h3>
 						<p className="py-4">
-							<label htmlFor="" className="flex flex-col gap-1">
-								<span>日にちを選択</span>
+							<label htmlFor="" className="flex flex-col gap-1 ">
+								<span className="text-black opacity-70">日にちを選択</span>
 								<input
 									type="date"
-									className="input input-sm bg-gray01"
+									className="input input-sm bg-gray01 text-black opacity-70"
 									value={inputDay ? inputDay : ""}
 									onChange={(e) => setInputDay(e.target.value)}
 								/>
@@ -110,13 +110,13 @@ const SpecialShiftForm = () => {
 								{/* if there is a button in form, it will close the modal */}
 								<button
 									type="submit"
-									className="btn bg-gray02 text-white border-none "
+									className="btn bg-gray02 text-white border-none rounded-full"
 								>
-									中止
+									戻る
 								</button>
 								<button
 									type="submit"
-									className={`btn  border-none w-32 ml-1 ${
+									className={`btn  border-none w-32 ml-1 rounded-full ${
 										!inputDay
 											? "text-gray02 bg-gray01 pointer-events-none"
 											: "text-green02 bg-green03 "
@@ -126,7 +126,7 @@ const SpecialShiftForm = () => {
 										setOpenAddSpecialShiftModal(true);
 									}}
 								>
-									登録
+									保存
 								</button>
 							</form>
 						</div>
@@ -152,10 +152,10 @@ const SpecialShiftForm = () => {
 						</h3>
 						<p className="py-4">
 							<label htmlFor="" className="flex flex-col gap-1">
-								<span>日にちを選択</span>
+								<span className="text-black opacity-70">日にちを選択</span>
 								<input
 									type="date"
-									className="input input-sm bg-gray01"
+									className="input input-sm bg-gray01 text-black opacity-70"
 									value={inputDay ? inputDay : ""}
 									onChange={(e) => setInputDay(e.target.value)}
 								/>
@@ -165,20 +165,20 @@ const SpecialShiftForm = () => {
 							<form method="dialog">
 								<button
 									type="submit"
-									className="btn bg-gray02 text-white border-none "
+									className="btn bg-gray02 text-white border-none rounded-full"
 								>
-									中止
+									戻る
 								</button>
 								<button
 									type="submit"
-									className={`btn   border-none w-32 ml-1 ${
+									className={`btn   border-none w-32 ml-1 rounded-full ${
 										!inputDay
 											? "text-gray02 bg-gray01 pointer-events-none"
 											: "text-green02 bg-green03 "
 									}`}
 									onClick={() => handleAddClosedDate(inputDay)}
 								>
-									登録
+									保存
 								</button>
 							</form>
 						</div>
@@ -226,7 +226,7 @@ const SpecialShiftForm = () => {
 						{shifts.length > 0 ? (
 							<button
 								type="button"
-								className="btn btn-sm rounded-full bg-green03 text-green02 border-none"
+								className="btn btn-sm rounded-full bg-green03 text-green02 border-none rounded-full"
 								onClick={() => {
 									// setInputDay(day)
 									const dialog = document.getElementById(
