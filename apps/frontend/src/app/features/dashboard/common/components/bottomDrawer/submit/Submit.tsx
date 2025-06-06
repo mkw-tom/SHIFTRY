@@ -67,7 +67,7 @@ const Submit = () => {
 	};
 
 	const formDataInit = {
-		shiftRequestId: "",
+		shiftRequestId: currentData?.id as string,
 		status: ShiftStatus.ADJUSTMENT,
 		shifts: {
 			name: user?.name as string,
