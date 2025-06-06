@@ -5,12 +5,14 @@ import { validateshiftRequestId } from "../../../middlewares/validations/shiftRe
 import getSubmittedShiftsSpesificController from "./get-by-shift-request-id/controller";
 import getSubmittedShiftUserController from "./get/controller";
 import upsertSubmittedShiftController from "./put/controller";
+import getSubmittedShiftUserOneController from "./get-one/controller";
 
 const router = express.Router();
 router.use(attachUserId);
 router.use(attachStoreId);
 
 router.get("/", getSubmittedShiftUserController);
+router.get("/one/:shiftRequestId", validateshiftRequestId, getSubmittedShiftUserOneController)
 router.get(
 	"/:shiftRequestId",
 	validateshiftRequestId,
