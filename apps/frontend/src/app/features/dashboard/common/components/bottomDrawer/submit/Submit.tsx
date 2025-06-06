@@ -2,7 +2,7 @@
 import type { RootState } from "@/app/redux/store";
 import { ShiftStatus } from "@shared/common/types/prisma";
 import type { UpsertSubmittedShiftInputType } from "@shared/shift/submit/validations/put";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useGetSubmittedShiftUserOne } from "../../../api/get-shift-submit-one/hook";
 import { useUpsertSubmitShift } from "../../../api/upsert-shift-submit/hook";
@@ -31,34 +31,32 @@ const Submit = () => {
 	const { handleUpsertSubmitShift, isLoading: submitLoading } =
 		useUpsertSubmitShift();
 
-	useEffect(() => {
-		const fetchData = async () => {
-			if (!userToken || !storeToken || !currentData?.id) return;
+	const fetchData = useCallback(async () => {
+		if (!userToken || !storeToken || !currentData?.id) return;
 
-			const res = await handleGetSubmitShiftUserOne({
-				userToken: userToken,
-				storeToken: storeToken,
-				shiftRequestId: currentData.id,
+		const res = await handleGetSubmitShiftUserOne({
+			userToken,
+			storeToken,
+			shiftRequestId: currentData.id,
+		});
+
+		if (res?.ok && res.submittedShift !== null) {
+			setFormData({
+				shiftRequestId: res.submittedShift.shiftRequestId,
+				status: res.submittedShift.status,
+				shifts:
+					typeof res.submittedShift.shifts === "string"
+						? JSON.parse(res.submittedShift.shifts)
+						: (res.submittedShift.shifts ?? formDataInit.shifts),
 			});
+		} else {
+			setFormData(formDataInit);
+		}
+	}, [userToken, storeToken, currentData?.id, handleGetSubmitShiftUserOne]); // 💡 最小限に限定
 
-			// 型ガード
-			if (res?.ok && res.submittedShift !== null) {
-				setFormData({
-					shiftRequestId: res.submittedShift.shiftRequestId,
-					status: res.submittedShift.status,
-					shifts: res.submittedShift.shifts
-						? typeof res.submittedShift.shifts === "string"
-							? JSON.parse(res.submittedShift.shifts)
-							: res.submittedShift.shifts
-						: formDataInit.shifts,
-				});
-			} else {
-				setFormData(formDataInit); // 未提出なら初期値
-			}
-		};
-
+	useEffect(() => {
 		fetchData();
-	}, [currentData, userToken, storeToken, handleGetSubmitShiftUserOne]);
+	}, [fetchData]);
 
 	const saveSubmitShift = async () => {
 		if (!userToken || !storeToken) {
