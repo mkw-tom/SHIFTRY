@@ -31,8 +31,8 @@ const DrawerHead = () => {
 			)}
 			{view !== undefined && view !== DrawerView.CREATE_REQUEST && (
 				<h2 className="text-black font-bold text-center border-b-1 border-b-gray01 w-full">
-					{MDW(currentData?.weekStart as Date)} ~{" "}
-					{MDW(currentData?.weekEnd as Date)}
+					{MDW(new Date(currentData?.weekStart as Date))} ~{" "}
+					{MDW(new Date(currentData?.weekEnd as Date))}
 				</h2>
 			)}
 			{/* <button
