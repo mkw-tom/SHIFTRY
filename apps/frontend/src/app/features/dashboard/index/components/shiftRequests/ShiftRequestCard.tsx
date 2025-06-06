@@ -2,6 +2,7 @@ import { MDW, YMDHM, YMDW } from "@/app/features/common/hooks/useFormatDate";
 import type { ShiftRequest } from "@shared/common/types/prisma";
 import type { RequestStatus } from "@shared/common/types/prisma";
 import React from "react";
+import type { ShiftRequestWithJson } from "../../../common/context/useBottomDrawer";
 import ActionButtons from "./ActionButtons";
 
 const statusBadgeMap: Record<
@@ -14,7 +15,7 @@ const statusBadgeMap: Record<
 	CONFIRMED: { text: "確定", colorClass: "bg-orange-400" },
 };
 
-const ShiftRequestCard = ({ data }: { data: ShiftRequest }) => {
+const ShiftRequestCard = ({ data }: { data: ShiftRequestWithJson }) => {
 	const { text, colorClass } = statusBadgeMap[data.status] ?? {
 		text: "不明",
 		colorClass: "bg-gray-400",
