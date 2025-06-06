@@ -101,8 +101,8 @@ const ActionButton = () => {
 					setStep(CreateRequestStep.Weekly);
 					return;
 				}
-				testSave();
-				// await saveShiftReqeust(userToken, storeToken, groupToken);
+				// testSave();
+				await saveShiftReqeust(userToken, storeToken, groupToken);
 				drawerClose();
 				setStep(CreateRequestStep.Period);
 				console.log("Submitting form with data:", formData);
