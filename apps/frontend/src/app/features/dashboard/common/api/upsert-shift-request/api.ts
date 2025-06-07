@@ -24,7 +24,7 @@ export const upsertShiftRequest = async ({
 	if (!storeToken) {
 		throw new Error("code is not found");
 	}
-	const res = await fetch(`${API_URL}/api/shift/submit`, {
+	const res = await fetch(`${API_URL}/api/shift/request`, {
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json",
