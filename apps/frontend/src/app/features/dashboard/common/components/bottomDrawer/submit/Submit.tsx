@@ -35,8 +35,8 @@ const Submit = () => {
 	const { handleUpsertSubmitShift, isLoading: submitDataLoading } =
 		useUpsertSubmitShift();
 
-	const formDataInit = useMemo(
-		() => ({
+	const initializeFormData = useCallback(() => {
+		const init: UpsertSubmittedShiftInputType = {
 			shiftRequestId: currentData?.id ?? "",
 			status: ShiftStatus.ADJUSTMENT,
 			shifts: {
@@ -47,9 +47,10 @@ const Submit = () => {
 				specificDates: [],
 				submittedAt: new Date().toISOString(),
 			},
-		}),
-		[currentData?.id, user?.name],
-	);
+		};
+		setFormData(init);
+		return init;
+	}, [currentData?.id, user?.name]);
 
 	const fetchData = useCallback(async () => {
 		if (!userToken || !storeToken || !currentData?.id) return;
@@ -67,18 +68,20 @@ const Submit = () => {
 				shifts:
 					typeof res.submittedShift.shifts === "string"
 						? JSON.parse(res.submittedShift.shifts)
-						: (res.submittedShift.shifts ?? formDataInit.shifts),
+						: (res.submittedShift.shifts ?? {
+								...initializeFormData().shifts, // fallback
+							}),
 			});
 			setReSubmit(true);
 		} else {
-			setFormData(formDataInit);
+			initializeFormData(); // ← ここで初期化
 		}
 	}, [
 		userToken,
 		storeToken,
 		currentData?.id,
 		handleGetSubmitShiftUserOne,
-		formDataInit,
+		initializeFormData,
 	]);
 
 	useEffect(() => {
@@ -91,11 +94,12 @@ const Submit = () => {
 		}
 		await handleUpsertSubmitShift({ userToken, storeToken, formData });
 		drawerClose();
-		setFormData(formDataInit);
+		initializeFormData();
 	};
 
-	const [formData, setFormData] =
-		useState<UpsertSubmittedShiftInputType>(formDataInit);
+	const [formData, setFormData] = useState<UpsertSubmittedShiftInputType>(() =>
+		initializeFormData(),
+	);
 
 	const isSubmitDisabled =
 		formData.shifts.weekCountMin === 0 ||
