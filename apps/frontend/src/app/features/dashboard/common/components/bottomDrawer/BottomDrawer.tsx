@@ -4,10 +4,10 @@ import { DrawerView, useBottomDrawer } from "../../context/useBottomDrawer";
 import { CreateRequestProvider } from "../../context/useCreateRequest";
 import Adjustment from "./Adjustment";
 import Confirm from "./Confirm";
-import Status from "./Status";
 import ActionButton from "./create-request/ActionButton";
 import CreateRequest from "./create-request/CreateRequest";
 import DrawerHead from "./elements/DrawerHead";
+import Status from "./status/Status";
 import Submit from "./submit/Submit";
 
 const BottomDrawer = () => {
