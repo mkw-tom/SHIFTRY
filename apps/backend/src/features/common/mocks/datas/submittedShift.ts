@@ -10,5 +10,4 @@ export const mockShiftsOfSubmitted: shiftsOfSubmittedType = {
 		"2025-11-12", // この日は終日OK
 		"2025-11-14&-15:00", // 15時までOK（午後は不可）
 	],
-	submittedAt: "2025-11-08T15:00:00Z",
 };

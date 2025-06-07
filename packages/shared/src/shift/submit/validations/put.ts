@@ -59,9 +59,6 @@ export const shiftsOfSubmittedValidate = z.object({
 		.max(7, "0〜7の間で指定してください"),
 	availableWeeks: z.array(availableWeekValidate).default([]),
 	specificDates: z.array(specificDatesValidate).default([]),
-	submittedAt: z
-		.string()
-		.datetime({ message: "ISO形式の日時で入力してください" }),
 });
 
 export type shiftsOfSubmittedType = z.infer<typeof shiftsOfSubmittedValidate>;

@@ -48,7 +48,6 @@ const Submit = () => {
 			weekCountMin: 0,
 			availableWeeks: [],
 			specificDates: [],
-			submittedAt: new Date().toISOString(),
 		},
 	});
 
@@ -99,7 +98,7 @@ const Submit = () => {
 			<div className="h-[450px] pb-56 overflow-y-auto">
 				<div className="flex  gap-1 flex-col px-2 pt-4">
 					<WeekCountForm formData={formData} setFormData={setFormData} />
-					<AvailableWeeksForm setFormData={setFormData} formData={formData} />
+					<AvailableWeeksForm setFormData={setFormData} formData={formData} />x
 					<SpecificDatesForm setFormData={setFormData} formData={formData} />
 				</div>
 			</div>
