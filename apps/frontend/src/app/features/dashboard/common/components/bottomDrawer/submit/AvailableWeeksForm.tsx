@@ -36,6 +36,16 @@ const AvailableWeeksForm = ({
 		}));
 	}
 
+	const dayOfweekArray: DayOfWeekType[] = [
+		"Monday",
+		"Tuesday",
+		"Wednesday",
+		"Thursday",
+		"Friday",
+		"Saturday",
+		"Sunday",
+	];
+
 	const UpdateAvailableWeekTime = (
 		day: DayOfWeekType,
 		startTime: string,
@@ -104,49 +114,51 @@ const AvailableWeeksForm = ({
 			</span>
 
 			<ul className="list-no flex flex-col gap-1 w-full pl-2">
-				{Object.entries(weekShiftData).map(([day, idx]) => (
-					<li
-						key={day}
-						className="border-b-1 border-gray01 pl-2 py-3 flex items-center justify-between "
-					>
-						<div className="flex gap-2 items-center">
-							<input
-								type="checkbox"
-								className="checkbox checkbox-sm checkbox-success mr-2"
-								checked={formData.shifts.availableWeeks.some((d) =>
-									d.startsWith(day),
-								)}
-								onChange={(e) => InputAvailableWeek(e, day as DayOfWeekType)}
-							/>
-							<h2 className="text-md font-thin opacity-70 tabular-nums text-blac">
-								{getJapaneseDay(day as DayOfWeekType)}
-							</h2>
-						</div>
-						<div>
-							{formData.shifts.availableWeeks
-								.filter((data) => data.startsWith(`${day}&`))
-								.map((entry) => {
-									const { startTime, endTime } = parseTimeRange(entry);
-									return (
-										<div key={entry} className="flex items-center gap-1">
-											<RiTimeLine className="text-black opacity-70" />
-											<span className="text-black opacity-70">
-												{startTime} - {endTime}
-											</span>
-										</div>
-									);
-								})}
-						</div>
+				{dayOfweekArray
+					.filter((day) => weekShiftData?.[day]?.length > 0)
+					.map((day) => (
+						<li
+							key={day}
+							className="border-b-1 border-gray01 pl-2 py-3 flex items-center justify-between "
+						>
+							<div className="flex gap-2 items-center">
+								<input
+									type="checkbox"
+									className="checkbox checkbox-sm checkbox-success mr-2"
+									checked={formData.shifts.availableWeeks.some((d) =>
+										d.startsWith(day),
+									)}
+									onChange={(e) => InputAvailableWeek(e, day)}
+								/>
+								<h2 className="text-md font-thin opacity-70 tabular-nums text-blac">
+									{getJapaneseDay(day)}
+								</h2>
+							</div>
+							<div>
+								{formData.shifts.availableWeeks
+									.filter((data) => data.startsWith(`${day}&`))
+									.map((entry) => {
+										const { startTime, endTime } = parseTimeRange(entry);
+										return (
+											<div key={entry} className="flex items-center gap-1">
+												<RiTimeLine className="text-black opacity-70" />
+												<span className="text-black opacity-70">
+													{startTime} - {endTime}
+												</span>
+											</div>
+										);
+									})}
+							</div>
 
-						<AddAvailableWeekModal
-							day={day as DayOfWeekType}
-							formData={formData}
-							parseTimeRange={parseTimeRange}
-							UpdateAvailableWeekTime={UpdateAvailableWeekTime}
-							RemoveAvailableWeekTime={RemoveAvailableWeekTime}
-						/>
-					</li>
-				))}
+							<AddAvailableWeekModal
+								day={day}
+								formData={formData}
+								parseTimeRange={parseTimeRange}
+								UpdateAvailableWeekTime={UpdateAvailableWeekTime}
+								RemoveAvailableWeekTime={RemoveAvailableWeekTime}
+							/>
+						</li>
+					))}
 			</ul>
 		</div>
 	);
