@@ -2,11 +2,12 @@
 import type { RootState } from "@/app/redux/store";
 import { ShiftStatus } from "@shared/common/types/prisma";
 import type { UpsertSubmittedShiftInputType } from "@shared/shift/submit/validations/put";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { useGetSubmittedShiftUserOne } from "../../../api/get-shift-submit-one/hook";
 import { useUpsertSubmitShift } from "../../../api/upsert-shift-submit/hook";
 import { useBottomDrawer } from "../../../context/useBottomDrawer";
+import SaveDataLoading from "../create-request/SaveDataLoading";
 import AvailableWeeksForm from "./AvailableWeeksForm";
 import SpecificDatesForm from "./SpecificDatesForm";
 import SubmitButton from "./SubmitButton";
@@ -22,15 +23,33 @@ export type DayOfWeekType =
 	| "Sunday";
 
 const Submit = () => {
-	const { currentData } = useBottomDrawer();
+	const { currentData, drawerClose } = useBottomDrawer();
 	const { userToken, storeToken } = useSelector(
 		(state: RootState) => state.token,
 	);
 	const { user } = useSelector((state: RootState) => state.user);
+	const [reSubmit, setReSubmit] = useState(false);
+
 	const { handleGetSubmitShiftUserOne, isLoading: getDataLoading } =
 		useGetSubmittedShiftUserOne();
-	const { handleUpsertSubmitShift, isLoading: submitLoading } =
+	const { handleUpsertSubmitShift, isLoading: submitDataLoading } =
 		useUpsertSubmitShift();
+
+	const formDataInit = useMemo(
+		() => ({
+			shiftRequestId: currentData?.id ?? "",
+			status: ShiftStatus.ADJUSTMENT,
+			shifts: {
+				name: user?.name ?? "",
+				weekCountMax: 0,
+				weekCountMin: 0,
+				availableWeeks: [],
+				specificDates: [],
+				submittedAt: new Date().toISOString(),
+			},
+		}),
+		[currentData?.id, user?.name],
+	);
 
 	const fetchData = useCallback(async () => {
 		if (!userToken || !storeToken || !currentData?.id) return;
@@ -50,10 +69,17 @@ const Submit = () => {
 						? JSON.parse(res.submittedShift.shifts)
 						: (res.submittedShift.shifts ?? formDataInit.shifts),
 			});
+			setReSubmit(true);
 		} else {
 			setFormData(formDataInit);
 		}
-	}, [userToken, storeToken, currentData?.id, handleGetSubmitShiftUserOne]); // 💡 最小限に限定
+	}, [
+		userToken,
+		storeToken,
+		currentData?.id,
+		handleGetSubmitShiftUserOne,
+		formDataInit,
+	]);
 
 	useEffect(() => {
 		fetchData();
@@ -64,19 +90,8 @@ const Submit = () => {
 			throw new Error("トークン情報がありません");
 		}
 		await handleUpsertSubmitShift({ userToken, storeToken, formData });
-	};
-
-	const formDataInit = {
-		shiftRequestId: currentData?.id as string,
-		status: ShiftStatus.ADJUSTMENT,
-		shifts: {
-			name: user?.name as string,
-			weekCountMax: 0,
-			weekCountMin: 0,
-			availableWeeks: [],
-			specificDates: [],
-			submittedAt: new Date().toISOString(),
-		},
+		drawerClose();
+		setFormData(formDataInit);
 	};
 
 	const [formData, setFormData] =
@@ -89,7 +104,7 @@ const Submit = () => {
 
 	return (
 		<div className="">
-			{/* {isLoading && <SaveDataLoading />} */}
+			{getDataLoading && <SaveDataLoading />}
 			<div className="h-[450px] pb-56 overflow-y-auto">
 				<div className="flex  gap-1 flex-col px-2 pt-4">
 					<WeekCountForm formData={formData} setFormData={setFormData} />
@@ -100,6 +115,8 @@ const Submit = () => {
 			<SubmitButton
 				isSubmitDisabled={isSubmitDisabled}
 				saveSubmitShift={saveSubmitShift}
+				submitDataLoading={submitDataLoading}
+				reSubmit={reSubmit}
 			/>
 		</div>
 	);
