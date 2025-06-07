@@ -3,7 +3,7 @@ import type { RootState } from "@/app/redux/store";
 import type { shiftsOfSubmittedType } from "@shared/common/types/json";
 import { ShiftStatus } from "@shared/common/types/prisma";
 import type { UpsertSubmittedShiftInputType } from "@shared/shift/submit/validations/put";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useGetSubmittedShiftUserOne } from "../../../api/get-shift-submit-one/hook";
 import { useUpsertSubmitShift } from "../../../api/upsert-shift-submit/hook";
@@ -29,6 +29,7 @@ const Submit = () => {
 		(state: RootState) => state.token,
 	);
 	const { user } = useSelector((state: RootState) => state.user);
+
 	const [reSubmit, setReSubmit] = useState(false);
 
 	const { handleGetSubmitShiftUserOne, isLoading: getDataLoading } =
@@ -51,41 +52,43 @@ const Submit = () => {
 		},
 	});
 
-	const fetchData = useCallback(async () => {
-		if (!userToken || !storeToken || !currentData?.id) return;
-
-		const res = await handleGetSubmitShiftUserOne({
-			userToken,
-			storeToken,
-			shiftRequestId: currentData.id,
-		});
-
-		if (res?.ok && res.submittedShift !== null) {
-			setFormData({
-				shiftRequestId: res.submittedShift.shiftRequestId,
-				status: res.submittedShift.status,
-				shifts: res.submittedShift.shifts as shiftsOfSubmittedType,
-			});
-			setReSubmit(true);
-		}
-	}, [userToken, storeToken, currentData?.id, handleGetSubmitShiftUserOne]);
+	const [formData, setFormData] = useState<UpsertSubmittedShiftInputType>(() =>
+		createInitialFormData(currentData?.id ?? "", user?.name ?? ""),
+	);
 
 	useEffect(() => {
+		const fetchData = async () => {
+			if (!userToken || !storeToken || !currentData?.id) return;
+
+			const res = await handleGetSubmitShiftUserOne({
+				userToken,
+				storeToken,
+				shiftRequestId: currentData.id,
+			});
+
+			if (res?.ok && res.submittedShift !== null) {
+				setFormData({
+					shiftRequestId: res.submittedShift.shiftRequestId,
+					status: res.submittedShift.status,
+					shifts: res.submittedShift.shifts as shiftsOfSubmittedType,
+				});
+				setReSubmit(true);
+			}
+		};
+
 		fetchData();
-	}, [fetchData]);
+	}, [userToken, storeToken, currentData?.id, handleGetSubmitShiftUserOne]);
 
 	const saveSubmitShift = async () => {
 		if (!userToken || !storeToken) {
 			throw new Error("トークン情報がありません");
 		}
+
 		await handleUpsertSubmitShift({ userToken, storeToken, formData });
+
 		drawerClose();
 		setFormData(createInitialFormData(currentData?.id ?? "", user?.name ?? ""));
 	};
-
-	const [formData, setFormData] = useState<UpsertSubmittedShiftInputType>(() =>
-		createInitialFormData(currentData?.id ?? "", user?.name ?? ""),
-	);
 
 	const isSubmitDisabled =
 		formData.shifts.weekCountMin === 0 ||
@@ -96,10 +99,10 @@ const Submit = () => {
 		<div className="">
 			{getDataLoading && <SaveDataLoading />}
 			<div className="h-[450px] pb-56 overflow-y-auto">
-				<div className="flex  gap-1 flex-col px-2 pt-4">
+				<div className="flex gap-1 flex-col px-2 pt-4">
 					<WeekCountForm formData={formData} setFormData={setFormData} />
-					<AvailableWeeksForm setFormData={setFormData} formData={formData} />x
-					<SpecificDatesForm setFormData={setFormData} formData={formData} />
+					<AvailableWeeksForm formData={formData} setFormData={setFormData} />
+					<SpecificDatesForm formData={formData} setFormData={setFormData} />
 				</div>
 			</div>
 			<SubmitButton
